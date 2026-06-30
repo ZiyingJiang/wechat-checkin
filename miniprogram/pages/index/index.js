@@ -13,9 +13,8 @@ Page({
    * 创建活动
    */
   goToCreate() {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
+    wx.navigateTo({
+      url: '/pages/create/index'
     })
   },
 

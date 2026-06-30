@@ -4,19 +4,19 @@
 
 用于保存每一个打卡活动。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| title | String | Yes | 活动名称（1~50字） |
-| description | String | No | 活动介绍（0~300字） |
-| days | Number | Yes | 活动持续天数（1~30） |
+| 字段 | 类型 | 必填 | 说明 | Constraints |
+|------|------|------|------| ----- |
+| title | String | Yes | 活动名称（1~50字） | Length: 1–50 |
+| description | String | No | 活动介绍（0~300字） | Length: 1–300 |
+| days | Number | Yes | 活动持续天数（1~30） | Range: 1-30 |
 | startDate | Date | Yes | 开始日期 |
 | endDate | Date | Yes | 结束日期 |
 | creatorOpenId | String | Yes | 发起人 OpenID |
-| fields | Array<String> | Yes | 最多3个记录指标 |
-| status | String | Yes | draft / running / finished |
+| fields | Array<String> | Yes | 最多3个记录指标 | Items: 1-3 |
+| status | String | Yes | draft / running / finished | Enum |
 | createdAt | Date | Yes | 创建时间 |
-| joinCode | String | Yes | 6位邀请码 |
-| maxParticipants | Number | No | 默认100 |
+| joinCode | String | Yes | 6位邀请码 | Length: 6, Unique |
+| maxParticipants | Number | No | 默认给i他100 | Default: 100 |
 
 ## Collection: participants
 
@@ -71,11 +71,58 @@ activities
    │
 checkins
 
-## Data Lifecycle
+## Validation Rules
 
-| Collection |	生命周期 |
-|------|------|
-| users | 长期保存 |
-| activities | 长期保存 |
-| participants | 长期保存 |
-| checkins | 长期保存，可导出 |
+### activities
+
+title
+- Required
+- Length: 1–50
+
+description
+- Optional
+- Length: 0–300
+
+days
+- Integer
+- Range: 1–30
+
+fields
+- Array<String>
+- Min Items: 1
+- Max Items: 3
+- No duplicate values
+
+joinCode
+- Unique
+- Fixed length: 6
+- Uppercase letters and numbers
+
+maxParticipants
+- Default: 100
+
+## Data Lifecycle & Retention
+
+| Collection | Lifecycle | Notes |
+|------------|-----------|-------|
+| users | Long-term | Created on first login. Normally never deleted. |
+| activities | Long-term | Remains after completion. Can be archived or deleted by the creator in a future version. |
+| participants | Long-term | Associated with an activity. Removed if the activity is permanently deleted. |
+| checkins | Long-term | Used for reports and CSV export. May be archived in a future version. |
+
+## Primary Keys & Relationships
+
+
+## Current Version (V1)
+
+- No automatic data expiration.
+- No scheduled cleanup.
+- All collections are stored permanently unless manually deleted.
+
+## Future Version (V2)
+
+- Support activity archive.
+- Support activity deletion.
+- Support batch export.
+- Support automatic cleanup after user deletion.
+

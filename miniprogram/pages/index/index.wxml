@@ -1,8 +1,8 @@
 <view class="container">
   <view class="header-section">
-    <text class="logo-text">🌱</text>
-    <text class="main-title">一起成长</text>
-    <text class="sub-title">每天一点点，成长看得见。</text>
+    <view class="logo-text">🌱</view>
+    <view class="main-title">一起成长</view>
+    <view class="sub-title">每天一点点，成长看得见。</view>
   </view>
 
   <view class="action-section">
