@@ -1,142 +1,140 @@
-/**index.wxss**/
 
-page {
-  padding-top: 54rpx;
-  background-color: #f6f6f6;
-  padding-bottom: 60rpx;
-}
+/* pages/index/index.wxss */
 
-.container {
-  font-family: PingFang SC;
-}
-
-.title {
-  font-family: PingFang SC;
-  font-weight: 500;
-  color: #000000;
-  font-size: 44rpx;
-  margin-bottom: 40rpx;
-}
-.function_title {
-  font-family: PingFang SC;
-  font-weight: 500;
-  color: #000000;
-  font-size: 36rpx;
-  text-align: left;
-  width: 93%;
-  margin-top: 50rpx;
-}
-
-.top_tip {
-  font-size: 28rpx;
-  font-family: PingFang SC;
-  font-weight: 400;
-  color: #888888;
-  margin-bottom: 28rpx;
-}
-
-.examples_container {
+/**
+ * 基础页面样式
+ * 采用东方极简风格，配合暖米白背景与充足的留白
+ */
+ .container {
+  min-height: 100vh;
+  max-width:750rpx;
+  margin:0 auto;
+  background-color: #F8F6F2;
+  padding: 0 48rpx; /* 页面左右间距 24px -> 48rpx */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
+}
+
+/**
+ * 顶部 Logo 与标语区
+ * 留白充足，文字居中，营造宁静、治愈的氛围
+ */
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120rpx; /* 顶部预留呼吸空间 */
+  padding-bottom: 80rpx;
+}
+
+.logo-text {
+  font-size: 56rpx; /* 徽标作为视觉点缀 */
+  margin-bottom: 32rpx;
+}
+
+.main-title {
+  font-size: 44rpx; /* 标题加粗  */
+  font-weight: bold;
+  color: #3E3E3E; /* 主文字颜色 */
+  line-height: 1.4;
+  margin-bottom: 16rpx;
+}
+
+.sub-title {
+  max-width:520rpx;
+  font-size: 28rpx; /* 说明文字 14px -> 28rpx */
+  color: #7D7D7D; /* 次文字颜色 */
+  line-height: 1.5;
+  text-align: center;
+}
+
+/**
+ * 操作按钮区
+ * 模块间距 24px -> 48rpx
+ */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx; /* 按钮之间的自然间距 */
+  margin-bottom: 48rpx; /* 模块间距 24px -> 48rpx */
+}
+
+/* 按钮通用基础样式 */
+.btn-primary, .btn-secondary {
   width: 100%;
-  align-items: center;
+  height: 96rpx; /* 按钮高度 48px -> 96rpx */
+  line-height: 96rpx;
+  border-radius: 24rpx; /* 圆角 16px -> 32rpx */
+  font-size: 34rpx; /* 按钮文字 17px -> 34rpx */
+  font-weight: 500;
+  letter-spacing:2rpx;
+  padding: 0;
+  box-shadow: none ; /* 无阴影极简风格 */
 }
 
-.example_item {
-  border: 3rpx solid #e5e5e5;
-  border-radius: 10rpx;
-  padding: 24rpx;
-  width: 90%;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* 按钮点击反馈 */
+.btn-hover{
+  opacity:.85;
 }
 
-.power {
-  margin-top: 30rpx;
-  border-radius: 5px;
-  background-color: white;
-  width: 93%;
-  padding-bottom: 1rpx;
+/* 主按钮：鼠尾草绿底白字 */
+.btn-primary {
+  background-color: #7FAE7B;
+  color: #FFFFFF;
+  border: none;
 }
 
-.power_info {
-  display: flex;
-  padding: 30rpx 25rpx;
-  align-items: center;
-  justify-content: space-between;
+/* 副按钮：白底绿边绿字 */
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #7FAE7B;
+  border: 2rpx solid #7FAE7B;
+  box-sizing: border-box;
 }
 
-.power_info_more {
-  width: 30rpx;
-  height: 30rpx;
-  transform: rotate(90deg);
-}
-
-.power_info_less {
-  width: 30rpx;
-  height: 30rpx;
-  transform: rotate(270deg);
-}
-
-.power_info_text {
+/**
+ * 我的活动区
+ */
+.activity-section {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
-.power_info_text_title {
-  margin-bottom: 10rpx;
-  font-weight: 400;
-  font-size: 32rpx;
+.section-title {
+  font-size: 34rpx; /* 分组标题 17px -> 34rpx */
+  font-weight: bold;
+  color: #3E3E3E; /* 主文字颜色 */
+  margin-bottom: 24rpx;
+}
+
+/**
+ * 空状态卡片
+ * 白底、无阴影、细灰边、圆角20px
+ */
+.empty-state {
+  min-height:220rpx;
+  background-color: #FFFFFF; /* 卡片背景白色 */
+  border: 2rpx solid #E9E6E1; /* 细灰边分隔线颜色 */
+  border-radius: 32rpx; /* 卡片圆角 20px -> 40rpx */
+  padding: 56rpx 40rpx; /* 卡片内边距 20px -> 40rpx，上下适当留白 */
   display: flex;
+  flex-direction: column;
   align-items: center;
-  font-family: 'PingFang SC';
-  color: #000;
+  justify-content: center;
+  box-shadow: none; /* 无阴影 */
 }
 
-.power_info_text_tag {
-  margin-left: 20rpx;
-  background-color: #fbe0e0;
-  color: #e54545;
-  padding: 0 7px;
-  font-size: 14px;
-  vertical-align: middle;
-  border-radius: 3px;
+.empty-text {
+  font-size: 28rpx; /* 正文文字 */
+  color: #7D7D7D; /* 次文字颜色 */
+  line-height: 1.8;
+  text-align: center;
+  display: block;
 }
 
-.power_info_text_tip {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 28rpx;
-  padding-right: 30rpx;
-}
-
-.power_item {
-  padding: 30rpx 25rpx;
-  display: flex;
-  justify-content: space-between;
-}
-
-.power_item_title {
-  font-size: 28rpx;
-  color: rgba(0, 0, 0, 0.9);
-}
-
-.power_item_icon {
-  width: 30rpx;
-  height: 30rpx;
-}
-
-.line {
-  width: 95%;
-  margin: 0 auto;
-  height: 2rpx;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.environment {
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 24rpx;
-  margin-top: 25%;
+.empty-text:last-child{
+  margin-top:8rpx;  
 }
