@@ -8,28 +8,27 @@
   <view class="form-section">
     <view class="form-item">
       <view  class="form-label">活动名称</view >
-      <input class="form-input" type="text" placeholder="例如：每天阅读30分钟" maxlength="50" />
+      <input class="form-input" value="{{title}}" bindinput="onTitleInput" type="text" placeholder="例如：每天阅读30分钟" maxlength="50" />
     </view>
 
     <view class="form-item">
       <view class="form-label">持续天数（1~30天）</view>
-      <input class="form-input" type="number" placeholder="14" maxlength="2" />
+      <input class="form-input" value="{{days}}" bindinput="onDaysInput" type="number" placeholder="14" maxlength="2" />
     </view>
 
     <view class="form-item">
       <view class="form-label">活动说明（可选）</view>
-      <textarea class="form-textarea" placeholder="写下关于这个活动的温暖期许……" maxlength="300" auto-height="true" />
+      <textarea class="form-textarea" value="{{description}}" bindinput="onDescriptionInput" placeholder="写下关于这个活动的温暖期许……" maxlength="300" auto-height="true" />
     </view>
-
 
 
     <view class="form-item">
       <view class="form-label">每天你希望大家记录什么？</view>
-      <view class="example-text">例如：阅读页数，运动分钟，饮食计量</view>
+      <view class="example-text">例如：阅读页数，运动分钟，喝水杯数</view>
       <view class="metric-group">
-        <input class="form-input metric-input" type="text" placeholder="指标一（必填）" />
-        <input class="form-input metric-input" type="text" placeholder="指标二（可选）" />
-        <input class="form-input metric-input" type="text" placeholder="指标三（可选）" />
+        <input class="form-input metric-input" data-index="0" type="text" placeholder="指标一（必填）" />
+        <input class="form-input metric-input" data-index="1" type="text" placeholder="指标二（可选）" />
+        <input class="form-input metric-input" data-index="2" type="text" placeholder="指标三（可选）" />
       </view>
     </view>
   </view>
@@ -38,6 +37,6 @@
 
   <view class="action-section">
     <view class="tip-text">创建成功后，可分享邀请码邀请伙伴加入。</view>    
-    <button class="btn-primary" hover-class="btn-hover" bindtap="createActivity">创建活动</button>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="handleCreateActivity">创建活动</button>
   </view>
 </view>

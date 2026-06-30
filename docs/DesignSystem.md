@@ -26,7 +26,7 @@
 
 ---
 
-## 色彩
+## 色彩理念
 
 ### 主色（Primary）
 
@@ -51,136 +51,6 @@ Logo
 #F8F6F2
 
 整个App背景
-
----
-
-### 卡片背景
-
-白色
-
-#FFFFFF
-
----
-
-### 主文字
-
-#3E3E3E
-
----
-
-### 次文字
-
-#7D7D7D
-
----
-
-### 分隔线
-
-#E9E6E1
-
----
-
-### 成功
-
-#76A86D
-
----
-
-### 警告
-
-#D8B35F
-
----
-
-## 字体
-
-标题
-
-28rpx
-
-加粗
-
-正文
-
-16px
-
-按钮
-
-17px
-
-说明文字
-
-14px
-
----
-
-## 圆角
-
-按钮
-
-16px
-
-卡片
-
-20px
-
-输入框
-
-12px
-
----
-
-## 间距
-
-页面左右
-
-24px
-
-模块间距
-
-24px
-
-卡片内边距
-
-20px
-
-按钮高度
-
-48px
-
----
-
-## 按钮
-
-主按钮
-
-绿色
-
-白字
-
-无阴影
-
-圆角16px
-
-副按钮
-
-白色
-
-绿色边框
-
-绿色文字
-
----
-
-## 卡片
-
-白底
-
-无阴影
-
-细灰边
-
-圆角20px
 
 ---
 
@@ -228,35 +98,47 @@ Logo
 
 避免鲜艳色彩
 
-让用户每天愿意打开。
+让用户每天愿意打开
 
-## Design Tokens
+---
 
-Color
+# Design Tokens 
+
+## Color
 
 Primary
-
 #7FAE7B
 
 Background
-
 #F8F6F2
 
-Text
+Surface
+#FFFFFF
 
+Text Primary
 #3E3E3E
 
-Radius
+Text Secondary
+#7D7D7D
+
+Text Tertiary
+#9A9A9A
+
+Border
+#E9E6E1
+
+## Radius
 
 Button
-
 24rpx
 
 Card
-
 32rpx
 
-Spacing
+Input
+20rpx
+
+## Spacing
 
 XS 8rpx
 
@@ -268,7 +150,7 @@ L 32rpx
 
 XL 48rpx
 
-Typography
+## Typography
 
 Logo 56rpx
 
@@ -279,3 +161,165 @@ H2 34rpx
 Body 28rpx
 
 Caption 24rpx
+
+Button 34rpx
+
+## Interaction
+
+Button Hover
+Opacity 0.85
+
+Animation
+None
+
+---
+
+# Component Specifications
+
+## Container
+
+Max Width
+750rpx
+
+Page Padding
+48rpx
+
+Background
+#F8F6F2
+
+Display
+Flex
+
+Direction
+Column
+
+## Header
+
+Top Padding
+120rpx
+
+Bottom Padding
+80rpx
+
+Alignment
+Center
+
+## Form
+
+Section Gap
+48rpx
+
+Form Item Gap
+16rpx
+
+## Form Label
+
+Font
+32rpx
+
+Weight
+600
+
+Color
+#3E3E3E
+
+## Example Text
+
+## Input
+
+Height
+88rpx
+
+Radius
+20rpx
+
+Background
+#FFFFFF
+
+Border
+2rpx #E9E6E1
+
+Padding
+0 24rpx
+
+Font
+30rpx
+
+## Textarea
+
+Min Height
+180rpx
+
+Padding
+24rpx
+
+Background
+#FFFFFF
+
+Border
+2rpx solid #E9E6E1
+
+Radius
+20rpx
+
+Font
+30rpx
+
+## Divider
+
+Height
+2rpx
+
+Color
+#E9E6E1
+
+Margin
+48rpx 0
+
+## Primary Button
+
+Height
+96rpx
+
+Radius
+24rpx
+
+Font
+34rpx
+
+Letter Spacing
+2rpx
+
+Background
+#7FAE7B
+
+Text Color
+#FFFFFF
+
+## Card
+
+Background
+#FFFFFF
+
+Radius
+32rpx
+
+Border
+2rpx solid #E9E6E1
+
+Padding
+40rpx
+
+Shadow
+None
+
+
+
+Font
+24rpx
+
+Color
+#9A9A9A
+
+Line Height
+1.6

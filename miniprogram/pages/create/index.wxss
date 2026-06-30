@@ -1,0 +1,174 @@
+
+/* pages/create/index.wxss */
+
+/**
+ * 基础页面样式
+ * 采用东方极简风格，配合暖米白背景与充足的留白
+ */
+ .container {
+    min-height: 100vh;
+    max-width:750rpx;
+    margin:0 auto;
+    background-color: #F8F6F2;
+    padding: 0 48rpx; /* 页面左右间距 24px -> 48rpx */
+    padding-bottom:80rpx; /* 避免键盘弹起，按钮贴底 */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /**
+   * 顶部 Logo 与标语区
+   * 留白充足，文字居中，营造宁静、治愈的氛围
+   */
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 120rpx; /* 顶部预留呼吸空间 */
+    padding-bottom: 80rpx;
+  }
+  
+  .logo-text {
+    font-size: 56rpx; /* 徽标作为视觉点缀 */
+    margin-bottom: 32rpx;
+  }
+  
+  .main-title {
+    font-size: 44rpx; /* 标题加粗  */
+    font-weight: bold;
+    color: #3E3E3E; /* 主文字颜色 */
+    line-height: 1.4;
+    margin-bottom: 16rpx;
+  }
+  
+  .sub-title {
+    max-width:520rpx;
+    font-size: 28rpx; /* 说明文字 14px -> 28rpx */
+    color: #7D7D7D; /* 次文字颜色 */
+    line-height: 1.5;
+    text-align: center;
+  }
+  
+  /**
+   * Form区
+   * 
+   */
+  .form-section {
+    display:flex;
+    flex-direction:column;
+    gap:48rpx;
+  }
+
+  .form-item{
+    display:flex;
+    flex-direction:column;
+    gap:16rpx;
+  }
+   
+  .form-label {
+    font-size:32rpx;
+    font-weight:600;
+    color:#3E3E3E;
+  }
+   
+  .example-text{
+    font-size:24rpx;
+    color:#9A9A9A;
+    line-height:1.6;
+    margin-top:-4rpx;
+    margin-bottom:8rpx;
+  }
+   
+  .form-input {
+    width:100%;
+    height:88rpx;
+    background:#FFFFFF;
+    border:2rpx solid #E9E6E1;
+    border-radius:20rpx;
+    padding:0 24rpx;
+    box-sizing:border-box;
+    font-size:30rpx;
+    color:#3E3E3E;
+  }
+   
+  .form-textarea{
+    width:100%;
+    min-height:180rpx;
+    background:#FFFFFF;
+    border:2rpx solid #E9E6E1;
+    border-radius:20rpx;
+    padding:24rpx;
+    box-sizing:border-box;
+    font-size:30rpx;
+    line-height:1.6;
+    color:#3E3E3E;
+  }
+
+  .metric-group{
+    display:flex;
+    flex-direction:column;
+    gap:20rpx;
+  }
+   
+  
+  /**
+   * 操作按钮区
+   * 模块间距 24px -> 48rpx
+   */
+  .action-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  /* 按钮通用基础样式 */
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    height: 96rpx; /* 按钮高度 48px -> 96rpx */
+    line-height: 96rpx;
+    border-radius: 24rpx; /* 圆角 16px -> 32rpx */
+    font-size: 34rpx; /* 按钮文字 17px -> 34rpx */
+    font-weight: 500;
+    letter-spacing:2rpx;
+    padding: 0;
+    box-shadow: none ; /* 无阴影极简风格 */
+  }
+  
+  /* 按钮点击反馈 */
+  .btn-hover{
+    opacity:.85;
+  }
+  
+  /* 主按钮：鼠尾草绿底白字 */
+  .btn-primary {
+    background-color: #7FAE7B;
+    color: #FFFFFF;
+    border: none;
+  }
+  
+  /* 副按钮：白底绿边绿字 */
+  .btn-secondary {
+    background-color: #FFFFFF;
+    color: #7FAE7B;
+    border: 2rpx solid #7FAE7B;
+    box-sizing: border-box;
+  }
+
+  .tip-text {
+    font-size: 24rpx;
+    color: #9A9A9A;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 32rpx;
+  }
+
+  .divider {
+    width: 100%;
+    height: 2rpx;
+    background-color: #E9E6E1;
+    margin: 48rpx 0;
+  }
+
