@@ -229,3 +229,53 @@ Logo
 避免鲜艳色彩
 
 让用户每天愿意打开。
+
+## Design Tokens
+
+Color
+
+Primary
+
+#7FAE7B
+
+Background
+
+#F8F6F2
+
+Text
+
+#3E3E3E
+
+Radius
+
+Button
+
+24rpx
+
+Card
+
+32rpx
+
+Spacing
+
+XS 8rpx
+
+S 16rpx
+
+M 24rpx
+
+L 32rpx
+
+XL 48rpx
+
+Typography
+
+Logo 56rpx
+
+H1 44rpx
+
+H2 34rpx
+
+Body 28rpx
+
+Caption 24rpx
