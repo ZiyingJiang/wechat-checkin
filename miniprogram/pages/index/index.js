@@ -22,9 +22,8 @@ Page({
    * 加入活动
    */
   goToJoin() {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
+    wx.navigateTo({
+      url: '/pages/join/index'
     })
   }
 

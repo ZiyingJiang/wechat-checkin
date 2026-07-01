@@ -3,6 +3,10 @@ const {
     createActivity
 } = require("../../services/activityService");    
 
+const {
+  addParticipant
+} = require("../../services/participantService");
+
 Page({
   /**
    * 页面输入数据
@@ -71,7 +75,7 @@ Page({
   
       return
     }
-  
+
     const activity={  
       title: this.data.title,  
       description: this.data.description,  
@@ -91,7 +95,16 @@ Page({
     try {
 
         const res = await createActivity(activity);
-    
+        // 自动把创建者加入活动
+        await addParticipant({
+          activityId: res._id,
+          openId: "",
+          nickname: "",
+          avatar: "",
+          role: "creator",
+          joinedAt: new Date()
+        });
+
          wx.showToast({
             title: "创建成功",
             icon: "success"

@@ -25,10 +25,11 @@
 | 字段 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | activityId | String | Yes | activities._id |
-| openid | String | Yes | 用户 OpenID |
-| nickname | String | Yes | 微信昵称 |
-| avatar | String | No | 微信头像 |
-| joinDate | Date | Yes | 加入时间 |
+| openid | String | Yes | 用户 OpenID（当前先为空）|
+| nickname | String | Yes | 用户昵称（当前先为空）|
+| avatar | String | No | 用户头像（当前先为空）|
+| role | String | Yes | creator/member |
+| joinedAt | Date | Yes | 加入时间 |
 
 
 ## Collection: checkins

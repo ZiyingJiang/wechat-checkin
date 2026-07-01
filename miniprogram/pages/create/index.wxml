@@ -26,9 +26,9 @@
       <view class="form-label">每天你希望大家记录什么？</view>
       <view class="example-text">例如：阅读页数，运动分钟，喝水杯数</view>
       <view class="metric-group">
-        <input class="form-input metric-input" data-index="0" type="text" placeholder="指标一（必填）" />
-        <input class="form-input metric-input" data-index="1" type="text" placeholder="指标二（可选）" />
-        <input class="form-input metric-input" data-index="2" type="text" placeholder="指标三（可选）" />
+        <input class="form-input metric-input" bindinput="onMetricInput" data-index="0" type="text" placeholder="指标一（必填）" />
+        <input class="form-input metric-input" bindinput="onMetricInput" data-index="1" type="text" placeholder="指标二（可选）" />
+        <input class="form-input metric-input" bindinput="onMetricInput" data-index="2" type="text" placeholder="指标三（可选）" />
       </view>
     </view>
   </view>
