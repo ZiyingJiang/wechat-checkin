@@ -13,6 +13,19 @@ function addParticipant(participant) {
 }
 
 /**
+ * 统计活动人数
+ */
+function countParticipants(activityId) {
+
+  return participants
+      .where({
+          activityId
+      })
+      .count();
+
+}
+
+/**
  * 查询是否已经加入活动
  */
 function findParticipant(activityId, openId) {
@@ -24,5 +37,6 @@ function findParticipant(activityId, openId) {
 
 module.exports = {
     addParticipant,
+    countParticipants,
     findParticipant
 };

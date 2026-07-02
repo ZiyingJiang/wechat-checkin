@@ -13,7 +13,32 @@
   <view class="activity-section">
     <view class="section-title">我的活动</view>
 
-    <view class="empty-state">
+    <block wx:for="{{activities}}" wx:key="_id">
+      <view class="activity-card">
+        <view class="activity-title">
+            {{item.title}}
+        </view>
+
+        <view class="activity-description">
+            {{item.description}}
+        </view>
+
+        <view class="activity-days">
+            Day {{item.currentDay}} / {{item.days}}
+        </view>
+
+        <view class="activity-code">
+            邀请码：{{item.joinCode}}
+        </view>
+
+        <view class="activity-participants">
+          👥 {{item.participantCount}} 人参加
+        </view>
+
+      </view>
+    </block>
+
+    <view class="empty-state" wx:if="{{activities.length===0}}">
       <text class="empty-text">还没有参加活动。</text>
       <text class="empty-text">创建一个成长计划，</text>
       <text class="empty-text">邀请伙伴一起开始吧 🌱</text>

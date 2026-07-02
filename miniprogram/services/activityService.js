@@ -57,10 +57,15 @@ function findActivityByCode(joinCode){
   return activities.where({
     joinCode: joinCode.toUpperCase()
   }).get();
+}
 
+
+function listActivities() {
+  return activities.get();
 }
 
 module.exports = {
   createActivity,
-  findActivityByCode
+  findActivityByCode,
+  listActivities
 };
