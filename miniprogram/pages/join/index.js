@@ -10,6 +10,7 @@ const {
 } = require("../../services/participantService");
 
 
+
 Page({
 
   data: {

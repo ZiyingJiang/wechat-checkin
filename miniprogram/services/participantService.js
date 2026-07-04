@@ -1,3 +1,5 @@
+/* miniprogram/services/participantService.js */
+
 const db = wx.cloud.database();
 const participants = db.collection("participants");
 

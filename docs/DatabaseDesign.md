@@ -39,11 +39,12 @@
 | 字段 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | activityId | String | Yes | activities._id |
-| openid | String | Yes | 用户 OpenID |
+| openId | String | Yes | 用户 OpenID |
 | date | Date | Yes | 打卡日期 |
 | day | Number | Yes | 第几天（1~30） |
 | values | Object | Yes | 各指标记录值 |
-| createTime | Date | Yes | 创建时间 |
+| createdAt | Date | Yes | 创建时间 |
+| note | String | No | 感想 |
 
 
 ## Collection: users

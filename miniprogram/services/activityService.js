@@ -64,8 +64,19 @@ function listActivities() {
   return activities.get();
 }
 
+/**
+*  读取活动
+*/
+function getActivityById(id) {
+  return activities.where({
+    _id: id
+  }).get();
+}
+
+
 module.exports = {
   createActivity,
   findActivityByCode,
-  listActivities
+  listActivities,
+  getActivityById
 };

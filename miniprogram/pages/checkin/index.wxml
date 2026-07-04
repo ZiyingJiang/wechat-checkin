@@ -1,0 +1,9 @@
+<block wx:if="{{activity}}">
+
+  <block wx:for="{{activity.fields}}" wx:key="*this">
+    <input bindinput="onValueInput" data-field="{{item}}" type="text" placeholder="请输入{{item}}"/>
+
+  </block>
+  <button class="btn-primary" bindtap="handleSubmit"> 提交打卡</button>
+</block>
+

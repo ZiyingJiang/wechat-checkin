@@ -14,7 +14,7 @@
     <view class="section-title">我的活动</view>
 
     <block wx:for="{{activities}}" wx:key="_id">
-      <view class="activity-card">
+      <view class="activity-card" bindtap="goToCheckin" data-id="{{item._id}}">
         <view class="activity-title">
             {{item.title}}
         </view>

@@ -72,6 +72,18 @@ Page({
     wx.navigateTo({
       url: '/pages/join/index'
     })
-  }
+  },
 
+  /**
+   * 打卡活动
+   */
+  goToCheckin(event) {
+
+    const activityId = event.currentTarget.dataset.id;
+
+    wx.navigateTo({
+      url: `/pages/checkin/index?id=${activityId}`
+    });
+    console.log(activityId); // Output: activityid
+  }
 })
