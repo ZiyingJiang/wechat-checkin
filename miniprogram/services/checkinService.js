@@ -18,8 +18,16 @@ async function createCheckin(checkin){
 function listCheckins(){
 
 }
+/**
+ * 查询今天是否已经打卡,看最新一条，未支持当日查询
+ */
+function todayCheckin(activityId, day){
 
-function todayCheckin(){
+    return checkins.where({
+      activityId: activityId,
+      day: day
+      //participantId: participantid
+    }).get();
 
 }
 
@@ -28,5 +36,6 @@ function updateCheckin(){
 }
 
 module.exports = {
-  createCheckin
+  createCheckin,
+  todayCheckin
 };

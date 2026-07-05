@@ -4,7 +4,8 @@ const {
 } = require("../../services/activityService");
 
 const {
-  createCheckin
+  createCheckin,
+  todayCheckin
 } = require("../../services/checkinService");
 
 const {
@@ -26,19 +27,35 @@ Page({
     /**
     * 读取活动
     */
-    const activity = await getActivityById(activityId);
-    if (activity.data.length === 0) {
+    const activityResult = await getActivityById(activityId);
+    if (activityResult.data.length === 0) {
       wx.showToast({
         title: "活动不存在",
         icon: "none"
       });
       return;
     }
+    const activity = activityResult.data[0];
+
+    //计算当前天数
+    const day = calculateCurrentDay(activity.startDate, activity.days);
 
     //保存到页面数据
     this.setData({
-      activity: activity.data[0]
+      activity
     });
+
+    /**
+    * 读取打卡
+    */
+    const checkin = await todayCheckin(activity._id, day);
+    if (checkin.data.length > 0) {
+      this.setData({
+        values:checkin.data[0].values
+      }); 
+      console.log(this.data.values);
+      return;
+    }
   },
 
   /**
@@ -57,6 +74,7 @@ Page({
   },
   
   async handleSubmit(){    
+    
     const day = calculateCurrentDay(this.data.activity.startDate, this.data.activity.days);
     const checkin = {
       activityId: this.data.activity._id,

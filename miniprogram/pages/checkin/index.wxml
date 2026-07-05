@@ -1,9 +1,19 @@
-<block wx:if="{{activity}}">
+<view class="container">
+<view class="activity-section">
+    <view class="section-title">我的活动</view>
+    <block wx:if="{{activity}}">
+      <view class="activity-title">
+            {{activity.title}}
+      </view>
+      <view class="activity-description">
+            {{activity.description}}
+      </view>
+      <block wx:for="{{activity.fields}}" wx:key="*this">
 
-  <block wx:for="{{activity.fields}}" wx:key="*this">
-    <input bindinput="onValueInput" data-field="{{item}}" type="text" placeholder="请输入{{item}}"/>
+        <input bindinput="onValueInput" data-field="{{item}}" type="text" placeholder="请输入{{item}}" value="{{values[item]}}"/>
 
-  </block>
-  <button class="btn-primary" bindtap="handleSubmit"> 提交打卡</button>
-</block>
-
+      </block>
+      <button class="btn-primary" bindtap="handleSubmit"> 提交打卡</button>
+    </block>
+</view>
+</view>
