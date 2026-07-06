@@ -19,7 +19,7 @@ function listCheckins(){
 
 }
 /**
- * 查询今天是否已经打卡,看最新一条，未支持当日查询
+ * 查询今天是否已经打卡
  */
 function todayCheckin(activityId, day){
 
@@ -31,11 +31,21 @@ function todayCheckin(activityId, day){
 
 }
 
-function updateCheckin(){
-  
+async function updateCheckin(checkinId, values, note) {
+
+  return checkins.doc(checkinId).update({
+    data: {
+      values,
+      note
+    }
+  });
+
 }
+
+
 
 module.exports = {
   createCheckin,
-  todayCheckin
+  todayCheckin,
+  updateCheckin
 };

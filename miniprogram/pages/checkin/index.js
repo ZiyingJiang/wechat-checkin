@@ -5,7 +5,8 @@ const {
 
 const {
   createCheckin,
-  todayCheckin
+  todayCheckin,
+  updateCheckin
 } = require("../../services/checkinService");
 
 const {
@@ -17,7 +18,8 @@ Page({
   data: {
     activity: null,
     values: {},
-    note: ""
+    note: "",
+    checkinId: null
   },
   
   async onLoad(options) {
@@ -51,9 +53,11 @@ Page({
     const checkin = await todayCheckin(activity._id, day);
     if (checkin.data.length > 0) {
       this.setData({
-        values:checkin.data[0].values
+        values:checkin.data[0].values,
+        checkinId: checkin.data[0]._id
       }); 
       console.log(this.data.values);
+      console.log(this.data.checkinId);
       return;
     }
   },
@@ -85,19 +89,37 @@ Page({
       note: "",
       createdAt: new Date()
     };
+    console.log(this.data.checkinId);
+    console.log(checkin);
 
     try{
         wx.showLoading({
           title:"提交中"
         });
 
-        await createCheckin(checkin);
+        if (this.data.checkinId) {
+          await updateCheckin(this.data.checkinId, this.data.values, this.data.note); 
+
+          message =   "打卡已更新";
+   
+        }
+        else {      
+          const result = await createCheckin(checkin);
+          this.setData({
+            checkinId: result._id
+          })
+          console.log("已分配checkinId:", checkinId);
+
+          message =  "打卡成功";
+
+        }
 
         wx.hideLoading();
-
+        
         wx.showToast({
-          title: "打卡成功",
-        });
+          title: message,
+          icon: "success"
+        }); 
 
     }catch(err){
         wx.hideLoading();
@@ -108,8 +130,7 @@ Page({
         });
     }
     
-  }
- 
+  } 
 
 });
 
