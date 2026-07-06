@@ -1,19 +1,55 @@
 <view class="container">
-<view class="activity-section">
-    <view class="section-title">我的活动</view>
-    <block wx:if="{{activity}}">
+  <view class="header-section">
+    <view class="main-title">今日打卡</view>
+    <view class="sub-title" wx:if="{{activity}}">
+      Day {{currentDay}} / {{activity.days}}
+    </view>
+
+  </view>
+  
+  <view class="activity-section">
+    <view class="activity-card">
       <view class="activity-title">
-            {{activity.title}}
+          {{activity.title}}
       </view>
+
       <view class="activity-description">
-            {{activity.description}}
+          {{activity.description}}
       </view>
+
+    </view>
+    <block wx:if="{{activity}}">
       <block wx:for="{{activity.fields}}" wx:key="*this">
-
-        <input bindinput="onValueInput" data-field="{{item}}" type="text" placeholder="请输入{{item}}" value="{{values[item]}}"/>
-
+        <view class="metric-group">
+          <view class="metric-label"> 
+            {{item}}  
+          </view>
+          <input 
+            class="metric-input"
+            data-field="{{item}}"
+            value="{{values[item]}}"
+            placeholder="请输入{{item}}"            
+            bindinput="onValueInput" 
+          />
+        </view>
       </block>
-      <button class="btn-primary" bindtap="handleSubmit"> 提交打卡</button>
     </block>
-</view>
+    <view class="note-title">
+      今日感想 （可选）
+    </view>
+    <textarea
+      class="note-input"
+      value="{{note}}"
+      bindinput="onNoteInput"
+      placeholder="今天有什么收获？"
+    /> 
+    
+    <view class="submit-section">
+      <view class="logo-text">🌱</view>
+      <view class="logo-text">已经坚持第{{currentDay}}天</view>
+      <button class="btn-primary" bindtap="handleSubmit"> 
+        {{checkinId ? "更新打卡" : "提交打卡"}}
+      </button>
+    </view>
+  </view>
 </view>

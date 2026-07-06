@@ -19,7 +19,8 @@ Page({
     activity: null,
     values: {},
     note: "",
-    checkinId: null
+    checkinId: null,
+    currentDay: 0
   },
   
   async onLoad(options) {
@@ -44,7 +45,8 @@ Page({
 
     //保存到页面数据
     this.setData({
-      activity
+      activity: activity,
+      currentDay: day
     });
 
     /**
@@ -74,8 +76,16 @@ Page({
     this.setData({
       values
     });  
-    console.log(values);
+   //console.log(values);
   },
+
+  onNoteInput(event){
+
+    this.setData({
+        note:event.detail.value
+    });
+
+},
   
   async handleSubmit(){    
     
