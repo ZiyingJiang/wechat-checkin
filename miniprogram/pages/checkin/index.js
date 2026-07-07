@@ -102,13 +102,19 @@ Page({
     console.log(this.data.checkinId);
     console.log(checkin);
 
+    let message = "";
+
     try{
         wx.showLoading({
           title:"提交中"
         });
 
         if (this.data.checkinId) {
-          await updateCheckin(this.data.checkinId, this.data.values, this.data.note); 
+          await updateCheckin(
+            this.data.checkinId, 
+            this.data.values, 
+            this.data.note
+          ); 
 
           message =   "打卡已更新";
    
@@ -118,7 +124,7 @@ Page({
           this.setData({
             checkinId: result._id
           })
-          console.log("已分配checkinId:", checkinId);
+          console.log("已分配checkinId:", this.data.checkinId);
 
           message =  "打卡成功";
 
@@ -132,7 +138,9 @@ Page({
         }); 
 
     }catch(err){
-        wx.hideLoading();
+      console.error(err);
+      
+      wx.hideLoading();
 
         wx.showToast({
             title:"提交失败",

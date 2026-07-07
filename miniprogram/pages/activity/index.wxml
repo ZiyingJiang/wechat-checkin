@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="header-section" wx:if="{{activity}}">
+    <view class="main-title">
+      {{activity.title}}
+    </view>
+    <view class="sub-title">
+       {{activity.description}}
+    </view>    
+  </view>
+
+  <view class="activity-section" wx:if="{{activity}}">
+
+    <view class="time-card">
+      <view class="time-title">
+        Day {{currentDay}} / {{activity.days}}
+      </view>
+      <view class="progress">
+        <view
+            class="progress-bar"
+            style="width:{{completionRate}}%">
+        </view>
+      </view>
+      <view class="time-description">
+        完成率 {{completionRate}}%
+      </view>
+    </view>
+
+    <view class="activity-card">
+      <view class="activity-title">
+        🌱 今日状态
+      </view>
+      <view class="activity-description">
+           {{todayCheckinId ? "✅ 已完成今日打卡" : "⭕ 今天尚未打卡"}}
+      </view>
+      <view class="submit-section">
+        <button class="btn-primary" bindtap="handleCheckin"> 
+          {{todayCheckinId ? "查看/修改今日打卡" : "开始今日打卡"}}
+        </button>
+      </view>
+    </view>   
+
+    <view class="history-card">
+      <view class="history-title">
+           打卡历史
+      </view>
+      <block wx:if="{{checkinHistory.length > 0}}">
+        <block wx:for="{{checkinHistory}}" wx:key="_id">
+          <view class="history-item">
+            <view>
+              ✅ Day {{item.day}}
+            </view> 
+            <block wx:for= "{{item.valueList}}" wx:key="*this">
+                <view>
+                  {{item[0]}}: {{item[1]}}
+                </view>
+            </block>            
+          </view>
+        </block>
+      </block>
+      <view wx:else class="history-empty">
+        还没有打卡记录 🌱
+      </view>
+    </view>
+
+  </view>
+</view>

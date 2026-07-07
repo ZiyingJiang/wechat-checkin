@@ -14,10 +14,17 @@ async function createCheckin(checkin){
 
 }
 
-
-function listCheckins(){
-
+/**
+ * 提取打卡历史
+ */
+function listCheckins(activityId){
+  return checkins.where({
+    activityId: activityId
+  })
+  .orderBy("day", "asc")
+  .get();
 }
+
 /**
  * 查询今天是否已经打卡
  */
@@ -47,5 +54,6 @@ async function updateCheckin(checkinId, values, note) {
 module.exports = {
   createCheckin,
   todayCheckin,
-  updateCheckin
+  updateCheckin,
+  listCheckins
 };

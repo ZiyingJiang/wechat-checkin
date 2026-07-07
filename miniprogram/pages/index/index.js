@@ -75,9 +75,21 @@ Page({
   },
 
   /**
+   * 显示活动
+   */
+  goToActivity(event) {
+    const activityId = event.currentTarget.dataset.id;
+
+    wx.navigateTo({
+      url: `/pages/activity/index?id=${activityId}`
+    });
+    console.log(activityId); // Output: activityid
+  },
+
+  /**
    * 打卡活动
    */
-  goToCheckin(event) {
+  handleCheckin(event) {
 
     const activityId = event.currentTarget.dataset.id;
 
@@ -85,5 +97,7 @@ Page({
       url: `/pages/checkin/index?id=${activityId}`
     });
     console.log(activityId); // Output: activityid
-  }
+  }  
+
+
 })
