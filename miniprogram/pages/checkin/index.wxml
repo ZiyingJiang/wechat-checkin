@@ -46,8 +46,12 @@
     
     <view class="submit-section">
       <view class="logo-text">🌱</view>
-      <view class="logo-text">已经坚持第{{currentDay}}天</view>
-      <button class="btn-primary" bindtap="handleSubmit"> 
+      <view class="logo-text">已经坚持到活动第{{currentDay}}天</view>
+      <button 
+        class="btn-primary" 
+        bindtap="handleSubmit" 
+        loading="{{submitting}}"
+        disabled="{{submitting}}"> 
         {{checkinId ? "更新打卡" : "提交打卡"}}
       </button>
     </view>

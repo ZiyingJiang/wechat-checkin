@@ -20,10 +20,13 @@ Page({
     values: {},
     note: "",
     checkinId: null,
-    currentDay: 0
+    currentDay: 0,
+    submitting: false
   },
   
   async onLoad(options) {
+
+
     //直接从options中提取id 
     const activityId = options.id;
 
@@ -42,6 +45,21 @@ Page({
 
     //计算当前天数
     const day = calculateCurrentDay(activity.startDate, activity.days);
+
+    //增强保护，活动结束后，不能再check in
+    if(day > activity.days){
+
+      wx.showToast({
+          title:"活动已经结束",
+          icon:"none"
+      });
+  
+      setTimeout(()=>{
+          wx.navigateBack();
+      },1000);
+  
+      return;
+    }
 
     //保存到页面数据
     this.setData({
@@ -71,7 +89,7 @@ Page({
   onValueInput(event){
     const values = {...this.data.values};
     const field = event.currentTarget.dataset.field;
-    values[field] = event.detail.value;
+    values[field] = (event.detail.value).trim();
 
     this.setData({
       values
@@ -85,24 +103,36 @@ Page({
         note:event.detail.value
     });
 
-},
+  },
   
   async handleSubmit(){    
     
+    if(this.data.submitting){
+      return;
+    } 
+
+    if (!this.validateInput()) {
+      return;
+    }
+
     const day = calculateCurrentDay(this.data.activity.startDate, this.data.activity.days);
     const checkin = {
       activityId: this.data.activity._id,
       participantId: "",
       date: new Date(),
       day: day,
-      values: this.data.values,
-      note: "",
+      values: {...this.data.values},
+      note: this.data.note,
       createdAt: new Date()
     };
     console.log(this.data.checkinId);
     console.log(checkin);
 
     let message = "";
+
+    this.setData({
+      submitting: true
+    });
 
     try{
         wx.showLoading({
@@ -115,9 +145,7 @@ Page({
             this.data.values, 
             this.data.note
           ); 
-
-          message =   "打卡已更新";
-   
+          message =   "打卡已更新";   
         }
         else {      
           const result = await createCheckin(checkin);
@@ -125,30 +153,53 @@ Page({
             checkinId: result._id
           })
           console.log("已分配checkinId:", this.data.checkinId);
-
           message =  "打卡成功";
-
         }
-
-        wx.hideLoading();
-        
+       
         wx.showToast({
           title: message,
-          icon: "success"
+          icon: "success",
+          duration: 1200
         }); 
 
+        setTimeout(() => {
+          wx.navigateBack();  
+        }, 1200);
+
     }catch(err){
-      console.error(err);
-      
-      wx.hideLoading();
+      console.error(err);     
 
         wx.showToast({
             title:"提交失败",
-            icon:"none"
+            icon:"none",
+            duration: 1200
         });
     }
-    
-  } 
+    finally{
+      
+      wx.hideLoading();
+      this.setData({
+        submitting: false
+      });
+    }
+
+  },
+
+  validateInput(){
+    const values= this.data.values;
+    const fields = this.data.activity.fields;  
+    for(const field of fields){
+      const fieldvalue = (values[field] || "").trim();
+      if (fieldvalue === "") {
+        wx.showToast({
+          title: `请输入 ${field}`,
+          icon: "none"
+        }); 
+        return false;
+      }
+    }
+    return true;    
+  }
 
 });
 

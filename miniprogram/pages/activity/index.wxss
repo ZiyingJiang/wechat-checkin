@@ -41,7 +41,8 @@
 
 .time-card,
 .activity-card,
-.history-card {
+.history-card,
+.empty-card {
   background: white;
   border-radius: 24rpx;
   padding: 32rpx;
@@ -50,7 +51,8 @@
 
 /* Day */
 
-.time-title {
+.time-title
+.history-title {
   font-size: 38rpx;
   font-weight: bold;
   color: #333;
@@ -116,6 +118,8 @@
   color: #999;
   font-size: 28rpx;
 }
+
+
 
 /* Progress Bar */
 

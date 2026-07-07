@@ -21,7 +21,7 @@ function listCheckins(activityId){
   return checkins.where({
     activityId: activityId
   })
-  .orderBy("day", "asc")
+  .orderBy("day", "desc")
   .get();
 }
 
