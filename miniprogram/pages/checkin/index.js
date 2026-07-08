@@ -76,8 +76,8 @@ Page({
         values:checkin.data[0].values,
         checkinId: checkin.data[0]._id
       }); 
-      console.log(this.data.values);
-      console.log(this.data.checkinId);
+      //console.log(this.data.values);
+      //console.log(this.data.checkinId);
       return;
     }
   },
@@ -125,8 +125,8 @@ Page({
       note: this.data.note,
       createdAt: new Date()
     };
-    console.log(this.data.checkinId);
-    console.log(checkin);
+    //console.log(this.data.checkinId);
+    //console.log(checkin);
 
     let message = "";
 

@@ -23,7 +23,7 @@
           Day {{currentDay}} / {{activity.days}}
         </view>
         <block wx:else>
-          <view class="time-title">🎉 恭喜完成挑战!</view>
+          <view class="time-title">🎉 恭喜坚持完成本次挑战!</view>
           <view class="time-description"> 🏆 累计打卡 {{checkedDays}} / {{activity.days}} 天 </view>
           <view class="time-description"> 🔥 最终连续坚持了 {{streak}} 天</view>
         </block>
@@ -44,9 +44,9 @@
           今日状态
         </view>        
         <view class="activity-description">
-            <view>🔥 你已连续坚持 {{streak}} 天</view>
-            <view wx:if="{{!hasCheckedToday}}"> 👉 今天打卡可保持连续记录</view>
             <view>{{hasCheckedToday? "✅ 已完成今日打卡" : "⭕ 今天尚未打卡"}}</view>
+            <view>🔥 已连续坚持 {{streak}} 天</view>
+            <view wx:if="{{!hasCheckedToday}}"> 👉 今天打卡可保持连续记录</view>            
         </view>
         <view class="submit-section">
           <button class="btn-primary" bindtap="handleCheckin"> 

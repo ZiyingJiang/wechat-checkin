@@ -4,12 +4,16 @@ const {
 } = require("../../services/activityService");
 
 const {
-  calculateCurrentDay
-} = require("../../utils/date");
-
-const {
   countParticipants
 } = require("../../services/participantService");
+
+const {
+  listCheckins
+} = require("../../services/checkinService");
+
+const {
+  calculateDashboard
+} = require("../../utils/dashboard");
 
 Page({
 
@@ -29,17 +33,23 @@ Page({
       res.data.map(async item => {
   
         const count = await countParticipants(item._id);
-  
+        const historyResult = await listCheckins(item._id);
+
+        const history = historyResult.data;
+
+        const dashboard =
+          calculateDashboard(
+              item,
+              history
+          );
+        //console.log("dashboard.streak:", dashboard.streak);
         return {
   
             ...item,
   
             participantCount: count.total,
   
-            currentDay: calculateCurrentDay(
-                item.startDate,
-                item.days
-            )
+            ...dashboard
   
           };
   
@@ -48,10 +58,8 @@ Page({
     );
     
     this.setData({    
-        activities    
+        activities  
     });
-
-    //console.log(res);
 
   },
 
@@ -83,7 +91,7 @@ Page({
     wx.navigateTo({
       url: `/pages/activity/index?id=${activityId}`
     });
-    console.log(activityId); // Output: activityid
+    //console.log(activityId); // Output: activityid
   },
 
   /**
@@ -96,7 +104,7 @@ Page({
     wx.navigateTo({
       url: `/pages/checkin/index?id=${activityId}`
     });
-    console.log(activityId); // Output: activityid
+    //console.log(activityId); // Output: activityid
   }  
 
 

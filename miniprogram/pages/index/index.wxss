@@ -189,3 +189,20 @@
   font-size:26rpx;
   color:#666;
 }
+
+/* Progress Bar */
+
+.progress {
+  margin-top: 24rpx;
+  width: 100%;
+  height: 16rpx;
+  background: #E8ECE7;
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #7FAE7B;
+  border-radius: 999rpx;
+}

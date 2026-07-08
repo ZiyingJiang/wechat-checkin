@@ -11,27 +11,83 @@
   </view>
 
   <view class="activity-section">
-    <view class="section-title">我的活动</view>
+    <view class="section-title">我的成长计划</view>
 
     <block wx:for="{{activities}}" wx:key="_id">
       <view class="activity-card" bindtap="goToActivity" data-id="{{item._id}}">
         <view class="activity-title">
             {{item.title}}
         </view>
-
         <view class="activity-description">
             {{item.description}}
         </view>
 
-        <view class="activity-days">
-            Day {{item.currentDay}} / {{item.days}}
-        </view>
+        <block wx:if="{{!item.isFinished}}">
+          <view class="activity-days" >
+              Day {{item.currentDay}} / {{item.days}}
+          </view>
 
-        <view class="activity-code">
-            邀请码：{{item.joinCode}}
-        </view>
+          <view class="progress">
+            <view class="progress-bar"
+                  style="width:{{item.completionRate}}%">
+            </view>
+          
+            <view class="progress-percent">
+              {{item.completionRate}}%
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class ="activity-description">
+            🎉 已完成
+          </view>
+          <view class ="activity-description">
+            🏆 打卡 {{item.checkedDays}} / {{item.days}} 天
+          </view>
+          <view class="progress-description">
+            ⭐ 完成率 {{item.completionRate}}%
+          </view>
 
-        <view class="activity-participants">
+        </block>
+        
+        <block wx:if="{{!item.isFinished}}">
+         
+
+          <block wx:if="{{!item.hasCheckedToday}}">
+
+            <view>
+                ⭕ 今天尚未打卡
+            </view>
+
+            <view class="activity-tip">
+                👉 去完成今天的成长
+            </view>
+
+          </block>
+          <block wx:else>
+            <view>
+              ✅ 已完成今日打卡
+            </view>          
+          </block>
+
+          <block wx:if="{{item.streak>0}}">
+              <view class="activity-streak">
+                  🔥 已连续坚持 {{item.streak}} 天
+              </view>
+          </block>
+
+          <block wx:else>
+              <view class="activity-streak">
+                  🌱 今天开始你的第一次坚持
+              </view>
+          </block>
+
+        </block>
+
+        <view class="activity-participants" wx:if="{{item.participantCount==1}}">
+          👤 仅你自己          
+        </view>
+        <view class="activity-participants" wx:else>
           👥 {{item.participantCount}} 人参加
         </view>
 

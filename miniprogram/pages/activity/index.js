@@ -13,6 +13,10 @@ const {
   calculateStreak
 } = require("../../utils/date");
 
+const {
+  calculateDashboard
+} = require("../../utils/dashboard");
+
 Page({
 
   data: {
@@ -91,11 +95,7 @@ Page({
             return;
           }
           const activity = activityResult.data[0];
-
-          //计算当前天数
-          const currentDay = calculateCurrentDay(activity.startDate, activity.days);
-          const isFinished = currentDay > activity.days;
-                
+               
           //读取打卡历史
           const checkinHistory = await listCheckins(activity._id);
 
@@ -107,32 +107,18 @@ Page({
             };
           });
 
-          //计算完成度
-          const checkedDays = history.length;
-          const completionRate = 
-            Math.min(
-                100,
-                Math.round(checkedDays / activity.days * 100)
+          const dashboard = 
+            calculateDashboard(
+              activity,
+              history
             );
-
-          //计算streak
-          const {streak, hasCheckedToday} = calculateStreak(history, currentDay);
-          console.log("hasCheckedToday", hasCheckedToday);
-          //读取当天打卡状态
-          //const todayRecord = history.find(item => item.day === currentDay);
-          //const todayCheckinId = todayRecord ? todayRecord._id : null;
 
           //保存到页面数据
           this.setData({
             activityId: activityId,
             activity: activity,
-            currentDay: currentDay,
             checkinHistory: history,      
-            completionRate: completionRate,
-            streak: streak,
-            hasCheckedToday: hasCheckedToday,
-            checkedDays:checkedDays,
-            isFinished: isFinished,
+            ...dashboard,
             loading: false
           });
       }catch(err){
