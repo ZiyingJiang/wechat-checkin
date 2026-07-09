@@ -107,5 +107,11 @@
         <text class="empty-text">邀请伙伴一起开始吧 🌱</text>
       </view>
     </view>
+    <view class = "footer-section">
+      <view class="footer-text">Wealth n Life Reading Club</view>
+      <view class="footer-text">v 1.0</view>
+      <view class="footer-text">Build with ❤️</view>
+      <view class="footer-text">© 2026</view>
+    </view>
   </view>
 </block>

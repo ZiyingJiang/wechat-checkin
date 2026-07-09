@@ -86,7 +86,7 @@ Page({
       console.error(err);
 
       wx.showToast({
-        title: "加载失败",
+        title: "加载失败，请稍后重试",
         icon: "none"
       })   
     } 

@@ -113,6 +113,22 @@
   margin-bottom: 16rpx;
 }
 
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20rpx; /* 顶部预留呼吸空间 */
+  padding-bottom: 10rpx;
+}
+
+.footer-text {
+  font-size: 26rpx; /* 正文文字 */
+  color: #7D7D7D; /* 次文字颜色 */
+  line-height: 1.8;
+  text-align: center;
+  display: block;
+}
 /**
  * 空状态卡片
  * 白底、无阴影、细灰边、圆角20px

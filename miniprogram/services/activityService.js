@@ -46,12 +46,12 @@ async function createActivity(activity){
 
     const result = await activities.add({
       data
-    });
+  });
 
-    return {
-        _id: result._id,
-        ...data
-    };
+  return {
+      _id: result._id,
+      ...data
+  };
 
 }
 
