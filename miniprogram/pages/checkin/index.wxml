@@ -1,59 +1,79 @@
-<view class="container">
-  <view class="header-section">
-    <view class="main-title">今日打卡</view>
-    <view class="sub-title" wx:if="{{activity}}">
-      Day {{currentDay}} / {{activity.days}}
-    </view>
-
+<block wx:if="{{loading}}">
+  <view class="loading">
+    加载中...
   </view>
-  
-  <view class="activity-section">
-    <view class="activity-card">
-      <view class="activity-title">
-          {{activity.title}}
-      </view>
+</block>
 
-      <view class="activity-description">
-          {{activity.description}}
+<block wx:else>
+  <view class="container">
+    <view class="header-section">
+      <view class="main-title">今日打卡</view>
+      <view class="sub-title" wx:if="{{activity}}">
+        Day {{currentDay}} / {{activity.days}}
       </view>
 
     </view>
-    <block wx:if="{{activity}}">
-      <block wx:for="{{activity.fields}}" wx:key="*this">
-        <view class="metric-group">
-          <view class="metric-label"> 
-            {{item}}  
-          </view>
-          <input 
-            class="metric-input"
-            data-field="{{item}}"
-            value="{{values[item]}}"
-            placeholder="请输入{{item}}"            
-            bindinput="onValueInput" 
-          />
-        </view>
-      </block>
-    </block>
-    <view class="note-title">
-      今日感想 （可选）
-    </view>
-    <textarea
-      class="note-input"
-      value="{{note}}"
-      bindinput="onNoteInput"
-      placeholder="今天有什么收获？"
-    /> 
     
-    <view class="submit-section">
-      <view class="logo-text">🌱</view>
-      <view class="logo-text">已经坚持到活动第{{currentDay}}天</view>
-      <button 
-        class="btn-primary" 
-        bindtap="handleSubmit" 
-        loading="{{submitting}}"
-        disabled="{{submitting}}"> 
-        {{checkinId ? "更新打卡" : "提交打卡"}}
-      </button>
+    <view class="activity-section">
+      <view class="activity-card">
+        <view class="activity-title">
+            {{activity.title}}
+        </view>
+
+        <view class="activity-description">
+            {{activity.description}}
+        </view>
+
+      </view>
+      <block wx:if="{{activity}}">
+        <block wx:for="{{activity.fields}}" wx:key="*this">
+          <view class="metric-group">
+
+            <view class="metric-label"> 
+              {{item}} 
+              <text
+                  wx:if="{{index===0}}"
+                  class="required">*</text>
+            </view>
+
+            <input 
+              class="metric-input"
+              data-field="{{item}}"
+              value="{{values[item]}}"
+              placeholder="{{index===0 ? '请记录'+ item +'（必填）':item +'（可选）'}}"            
+              bindinput="onValueInput" 
+            />
+
+          </view>
+
+        </block>
+
+        <view class="metric-group">
+          <view class="metric-label">
+            今日感想 （可选）
+          </view>
+
+          <textarea
+            class="metric-input"
+            value="{{note}}"
+            bindinput="onNoteInput"
+            placeholder="今天有什么收获？"
+          /> 
+
+        </view>
+      </block>    
+      
+      <view class="submit-section">
+        <view class="logo-text">🌱</view>
+        <view class="logo-text">已经坚持到活动第{{currentDay}}天</view>
+        <button 
+          class="btn-primary" 
+          bindtap="handleSubmit" 
+          loading="{{submitting}}"
+          disabled="{{submitting}}"> 
+          {{checkinId ? "更新打卡" : "提交打卡"}}
+        </button>
+      </view>
     </view>
-  </view>
-</view>
+  </view>  
+</block>

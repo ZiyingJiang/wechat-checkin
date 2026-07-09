@@ -37,11 +37,10 @@
 
   <button
     class="btn-primary"
-    hover-class="btn-hover"
-    bindtap="handleJoinActivity">
-
-    加入活动
-
+    bindtap="handleJoinActivity"
+    loading="{{submitting}}"
+    disabled="{{submitting}}">
+    {{submitting ? "加入中..." : "加入活动"}}
   </button>
 
 </view>

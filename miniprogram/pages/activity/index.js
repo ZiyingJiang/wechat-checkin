@@ -57,7 +57,7 @@ Page({
       //如活动完成，不能进入checkin页面
       if(this.data.isFinished){
         wx.showToast({
-            title:"活动已经完成",
+            title:"活动已完结",
             icon:"none"
         });
         return;
@@ -70,7 +70,6 @@ Page({
         return;
       }
 
-      console.log("进入打卡页面：", activity._id);   
       wx.navigateTo({
         url: `/pages/checkin/index?id=${activity._id}`
       });
@@ -92,6 +91,11 @@ Page({
               title: "活动不存在",
               icon: "none"
             });
+            
+            this.setData({
+              loading: false
+            }); 
+
             return;
           }
           const activity = activityResult.data[0];
@@ -99,11 +103,17 @@ Page({
           //读取打卡历史
           const checkinHistory = await listCheckins(activity._id);
 
-          //把 values object转成array, 方便页面循环显示
+          //把 values object转成array, 方便页面循环显示。指标及数值遵循数据库顺序而不是输入顺序
           const history = checkinHistory.data.map(checkin=> {
+            const valueList = activity.fields.map(field => {
+              return {
+                  label: field,      
+                  value: checkin.values[field] || ""      
+              };      
+            });
             return{
               ...checkin,
-              valueList: Object.entries(checkin.values)
+              valueList
             };
           });
 

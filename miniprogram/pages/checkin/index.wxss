@@ -9,8 +9,8 @@
   min-height: 100vh;
   max-width:750rpx;
   margin:0 auto;
-  background-color: #F8F6F2;
-  padding: 0 48rpx; /* 页面左右间距 24px -> 48rpx */
+  background-color: #f7f8fa;
+  padding: 32rpx; /* 页面左右间距 24px -> 48rpx */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -36,9 +36,9 @@
 }
 
 .main-title {
-  font-size: 44rpx; /* 标题加粗  */
-  font-weight: bold;
-  color: #3E3E3E; /* 主文字颜色 */
+  font-size:48rpx;
+  font-weight:700;
+  color:#222;
   line-height: 1.4;
   margin-bottom: 16rpx;
 }
@@ -65,11 +65,11 @@
 /* 按钮通用基础样式 */
 .btn-primary, .btn-secondary {
   width: 100%;
-  height: 96rpx; /* 按钮高度 48px -> 96rpx */
-  line-height: 96rpx;
-  border-radius: 24rpx; /* 圆角 16px -> 32rpx */
-  font-size: 34rpx; /* 按钮文字 17px -> 34rpx */
-  font-weight: 500;
+  height: 88rpx; /* 按钮高度 48px -> 96rpx */
+  line-height: 88rpx;
+  border-radius: 999rpx;
+  font-size: 30rpx; /* 按钮文字 17px -> 34rpx */
+  font-weight: 600;
   letter-spacing:2rpx;
   padding: 0;
   box-shadow: none ; /* 无阴影极简风格 */
@@ -82,7 +82,7 @@
 
 /* 主按钮：鼠尾草绿底白字 */
 .btn-primary {
-  background-color: #7FAE7B;
+  background-color: #4caf50;
   color: #FFFFFF;
   border: none;
 }
@@ -91,7 +91,7 @@
 .btn-secondary {
   background-color: #FFFFFF;
   color: #7FAE7B;
-  border: 2rpx solid #7FAE7B;
+  border: 2rpx solid #4caf50;
   box-sizing: border-box;
 }
 
@@ -105,10 +105,11 @@
 }
 
 .section-title {
-  font-size: 34rpx; /* 分组标题 17px -> 34rpx */
-  font-weight: bold;
-  color: #3E3E3E; /* 主文字颜色 */
-  margin-bottom: 24rpx;
+  font-size: 34rpx; 
+  font-weight: 600;
+  color: #333;
+  margin-top: 24rpx;
+  margin-bottom: 16rpx;
 }
 
 /**
@@ -117,8 +118,8 @@
  */
 .empty-state {
   min-height:220rpx;
-  background-color: #FFFFFF; /* 卡片背景白色 */
-  border: 2rpx solid #E9E6E1; /* 细灰边分隔线颜色 */
+  background-color:#f7f8fa; /* 卡片背景白色 */
+  border: 2rpx solid #eeeeee; /* 细灰边分隔线颜色 */
   border-radius: 32rpx; /* 卡片圆角 20px -> 40rpx */
   padding: 56rpx 40rpx; /* 卡片内边距 20px -> 40rpx，上下适当留白 */
   display: flex;
@@ -145,33 +146,31 @@
  * 
  */
 .activity-item {
-  background: #FFFFFF;
-  border: 2rpx solid #E9E6E1;
+  background:#f7f8fa;
+  border: 2rpx solid #eeeeee;
   border-radius: 32rpx;
   padding: 24rpx;
   margin-bottom: 24rpx;
 }
 
 .activity-card {
-  background: #FFFFFF;
-  border: 2rpx solid #E9E6E1;
+  background:#f7f8fa;
+  border: 2rpx solid #eeeeee;
   border-radius: 32rpx;
   padding: 32rpx;
   margin-bottom: 24rpx;
 }
 
 .activity-title {
-  font-size: 34rpx;
-  font-weight: bold;
-  color: #3E3E3E;
-  margin-bottom: 12rpx;
+  font-size:32rpx;
+  font-weight:600;
+  color:#222;
 }
 
 .activity-description {
   font-size: 28rpx;
-  color: #7D7D7D;
-  line-height: 1.5;
-  margin-bottom: 20rpx;
+  color: #666;
+  line-height: 1.6;
 }
 
 .container {
@@ -180,12 +179,19 @@
   min-height: 100vh;
 }
 
-.activity-card,
 .metric-group,
 .note-section {
-  background: #ffffff;
+  background: #f7f8fa;
   border-radius: 16rpx;
   padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.activity-card {
+  background: #f7f8fa;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.05);
   margin-bottom: 24rpx;
 }
 
@@ -197,23 +203,29 @@
 }
 
 .metric-input {
-  border: 1px solid #e5e5e5;
+  border: 1px solid #eeeeee;
   border-radius: 12rpx;
   padding: 18rpx;
   font-size: 30rpx;
-  background: #fafafa;
+  background: #f7f8fa;
 }
 
 .note-input {
   width: 100%;
   min-height: 180rpx;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #eeeeee;
   border-radius: 12rpx;
   padding: 18rpx;
   box-sizing: border-box;
-  background: #fafafa;
+  background:#f7f8fa;
 }
 
 .submit-section {
   margin-top: 40rpx;
+}
+
+.loading{
+  padding:120rpx;
+  color:#999;
+  text-align:center;
 }

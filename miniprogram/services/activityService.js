@@ -44,9 +44,14 @@ async function createActivity(activity){
         maxParticipants:100
     };
 
-    return activities.add({
-        data
+    const result = await activities.add({
+      data
     });
+
+    return {
+        _id: result._id,
+        ...data
+    };
 
 }
 

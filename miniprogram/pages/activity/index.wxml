@@ -13,17 +13,20 @@
       </view>
       <view class="sub-title">
         {{activity.description}}
-      </view>    
+      </view> 
+      <view class="activity-code">
+            邀请码：{{activity.joinCode}}
+      </view>   
     </view>
 
     <view class="activity-section" wx:if="{{activity}}">
 
-      <view class="time-card">
-        <view class="time-title" wx:if ="{{!isFinished}}">
+      <view class=" card time-card">
+        <view class="section-title" wx:if ="{{!isFinished}}">
           Day {{currentDay}} / {{activity.days}}
         </view>
         <block wx:else>
-          <view class="time-title">🎉 恭喜坚持完成本次挑战!</view>
+          <view class="section-title">🎉 恭喜坚持完成本次挑战!</view>
           <view class="time-description"> 🏆 累计打卡 {{checkedDays}} / {{activity.days}} 天 </view>
           <view class="time-description"> 🔥 最终连续坚持了 {{streak}} 天</view>
         </block>
@@ -39,14 +42,20 @@
       </view>
 
       <block wx:if="{{!isFinished}}">
-      <view class="activity-card">
+      <view class="card activity-card">
         <view class="activity-title">
           今日状态
         </view>        
         <view class="activity-description">
-            <view>{{hasCheckedToday? "✅ 已完成今日打卡" : "⭕ 今天尚未打卡"}}</view>
-            <view>🔥 已连续坚持 {{streak}} 天</view>
-            <view wx:if="{{!hasCheckedToday}}"> 👉 今天打卡可保持连续记录</view>            
+            <view class="activity-status">
+              {{hasCheckedToday? "✅ 已完成今日打卡" : "⭕ 今天尚未打卡"}}
+            </view>
+            <view class="activity-status">
+              🔥 已连续坚持 {{streak}} 天
+            </view>
+            <view class="activity-status" wx:if="{{!hasCheckedToday}}"> 
+              👉 今天打卡可保持连续记录
+            </view>            
         </view>
         <view class="submit-section">
           <button class="btn-primary" bindtap="handleCheckin"> 
@@ -56,8 +65,8 @@
       </view>   
       </block>
 
-      <view class="history-card">
-        <view class="history-title">
+      <view class="card history-card">
+        <view class="section-title">
               打卡历史
         </view>
         <block wx:if="{{checkinHistory.length > 0}}">
@@ -67,9 +76,9 @@
                   <view class="history-day">
                     ✅ Day {{item.day}}
                   </view> 
-                  <block wx:for= "{{item.valueList}}" wx:key="*this">
+                  <block wx:for= "{{item.valueList}}" wx:key="label">
                       <view class="history-value">
-                        {{item[0]}}: {{item[1]}}
+                        {{item.label}}: {{item.value}}
                       </view>
                   </block>            
                 </view>
