@@ -91,7 +91,7 @@
 }
 
 /* 按钮点击反馈 */
-.btn-hover{
+.btn-hover {
   opacity:.85;
 }
 
@@ -122,6 +122,9 @@
   padding-bottom: 10rpx;
 }
 
+/**
+ * footer
+ */
 .footer-text {
   font-size: 26rpx; /* 正文文字 */
   color: #7D7D7D; /* 次文字颜色 */
@@ -154,7 +157,7 @@
   display: block;
 }
 
-.empty-text:last-child{
+.empty-text:last-child {
   margin-top:8rpx;  
 }
 
@@ -171,12 +174,12 @@
 }
 
 .activity-card {
-  background:#f7f8fa;
+  background: #ffffff;
+  border: 2rpx solid #eeeeee;
   border-radius: 24rpx;
   padding: 28rpx;
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.05);
   margin-bottom: 24rpx;
-  box-shadow:
-      0 8rpx 20rpx rgba(0,0,0,.05);
 }
 
 .activity-title {
@@ -193,7 +196,7 @@
   margin-bottom:20rpx;
 }
 
-.activity-status{
+.activity-status {
   margin-top:16rpx;
   color:#555;
   line-height:1.4;
@@ -210,7 +213,7 @@
   color: #555;
 }
 
-.activity-participants{
+.activity-participants {
   margin-top:18rpx;
   font-size:28rpx;
   color:#666;
@@ -234,11 +237,11 @@
   background:#4caf50;
   border-radius: 10rpx;
 }
-.progress-percent{
+.progress-percent {
   font-size:28rpx;
 }
 
-.loading{
+.loading {
   padding:120rpx;
   color:#999;
   text-align:center;

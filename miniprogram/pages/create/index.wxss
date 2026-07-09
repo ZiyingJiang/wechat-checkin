@@ -9,7 +9,7 @@
     min-height: 100vh;
     max-width:750rpx;
     margin:0 auto;
-    background-color: #f7f8fa
+    background-color: #f7f8fa;
     padding: 32rpx; /* 页面左右间距 24px -> 48rpx */
     padding-bottom:80rpx; /* 避免键盘弹起，按钮贴底 */
     box-sizing: border-box;
@@ -35,7 +35,7 @@
     margin-bottom: 32rpx;
   }
   
-  .main-title
+  .main-title,
   .success-title {
     font-size:48rpx;
     font-weight:700;
@@ -183,7 +183,8 @@
 .activity-card,
 .history-card,
 .empty-card {
-  background: #f7f8fa;
+  background: #ffffff;
+  border: 2rpx solid #eeeeee;
   border-radius: 24rpx;
   padding: 28rpx;
   box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.05);
