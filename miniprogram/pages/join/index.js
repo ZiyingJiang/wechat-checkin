@@ -35,26 +35,28 @@ Page({
       return;
     }
 
-    // 3. 开始提交
-    this.setData({
-      submitting: true
-    });
 
-    wx.showLoading({
-      title:"加入中"
-    });
 
     try{
       const activity = await findActivityByCode(this.data.joinCode);
 
       if (activity.data.length === 0) {
         wx.showToast({
-          title: "请输入有效邀请码",
+          title: "邀请码不存在",
           icon: "none"
         });
         return;
       }
+
+      // 3. 开始提交
+      this.setData({
+        submitting: true
+      });
   
+      wx.showLoading({
+        title:"加入中"
+      });
+      
       const participant = {
         activityId: activity.data[0]._id,
         role: "member",

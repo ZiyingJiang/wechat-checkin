@@ -176,6 +176,24 @@ Page({
       });
       return false;  
     }   
+
+    //确认打卡指标不重复
+    const metrics = this.data.metrics
+    .map(item => item.trim())
+    .filter(item => item !== "");
+
+    const uniqueMetrics = new Set(metrics);
+
+    if (uniqueMetrics.size !== metrics.length) {
+
+        wx.showToast({
+            title:"打卡指标不能重复",
+            icon:"none"
+        });
+
+        return false;
+    }
+    
     return true;    
   },
 
