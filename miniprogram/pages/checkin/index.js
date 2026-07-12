@@ -1,5 +1,9 @@
 //miniprogram/pages/checkin/index.js
 const {
+  getOpenId
+} = require("../../services/userService");
+
+const {
   getActivityById
 } = require("../../services/activityService");
 
@@ -18,12 +22,15 @@ Page({
   data: {
     activityId: null,
     activity: null,
+    openId:"",
     values: {},
     note: "",
     checkinId: null,
     currentDay: 0,
     submitting: false,
-    loading: true
+    loading: true,
+    createdAt: null
+
   },
   
   async onLoad(options) {
@@ -39,9 +46,7 @@ Page({
     });
 
     try{
-      /**
-      * 读取活动
-      */
+      // 读取活动
       const activityResult = await getActivityById(this.activityId);
       if (activityResult.data.length === 0) {
 
@@ -56,10 +61,14 @@ Page({
       //计算当前天数
       const day = calculateCurrentDay(activity.startDate, activity.days);
 
+      //获取openId
+      const openId =await getOpenId();
+
       //写入数据，准备页面显示
       this.setData({    
         activity,
-        currentDay: day
+        currentDay: day,
+        openId
       });
 
       //增强保护，活动结束后，不能再check in
@@ -80,11 +89,12 @@ Page({
       /**
       * 读取打卡
       */
-      const checkin = await todayCheckin(activity._id, day);
+
+      const checkin = await todayCheckin(activity._id, day, openId);
       if (checkin.data.length > 0) {
         this.setData({
           values:checkin.data[0].values,
-          checkinId: checkin.data[0]._id,
+          checkinId: checkin.data[0]._id
         }); 
         return;
       }
@@ -151,11 +161,10 @@ Page({
     });
 
     try{
-
         const day = calculateCurrentDay(this.data.activity.startDate, this.data.activity.days);
         const checkin = {
           activityId: this.data.activity._id,
-          participantId: "",
+          openId: this.data.openId,
           date: new Date(),
           day: day,
           values: {...this.data.values},

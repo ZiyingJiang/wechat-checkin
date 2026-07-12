@@ -1,5 +1,9 @@
 // pages/index/index.js
 const {
+  getOpenId
+} = require("../../services/userService");
+
+const {
   listActivities
 } = require("../../services/activityService");
 
@@ -26,6 +30,14 @@ Page({
   },
 
   async onLoad() {
+    wx.cloud.callFunction({
+      name: "login"
+    }).then(res => {
+      console.log("Login Result:", res.result);
+    }).catch(err => {
+      console.error(err);
+    });
+    
     await this.loadActivities();  
   },
 
@@ -39,6 +51,9 @@ Page({
     });
 
     try{
+      
+      const openId = await getOpenId();
+      
       const res = await listActivities();
 
       const activities = await Promise.all(
@@ -46,7 +61,7 @@ Page({
         res.data.map(async item => {
     
           const count = await countParticipants(item._id);
-          const historyResult = await listCheckins(item._id);
+          const historyResult = await listCheckins(item._id, openId);
           const history = historyResult.data;
           const dashboard =
             calculateDashboard(

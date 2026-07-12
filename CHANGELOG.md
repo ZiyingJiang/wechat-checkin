@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is inspired by **Keep a Changelog**, and this project follows **Semantic Versioning**.
 
 ---
+# v1.0.2
+
+## Fixed
+
+- Fixed expired activities still allowing check-in.
+- Fixed "Invitation code not found" toast disappearing too quickly on physical devices.
+- Fixed participant identity by replacing placeholder openId with real WeChat OpenID.
+
+## Changed
+
+- Introduced shared activity status utility based on endDate.
+- Improved participant permission logic.
+
+## Security
+
+- Updated CloudBase database permissions to support OpenID-based access.
+
+---
 
 ## [v1.0.1] - 2026-07-09
 
@@ -72,6 +90,26 @@ Reading Club WeChat Mini Program MVP released.
 * Git version control.
 * Release Candidate workflow.
 * Semantic version tagging.
+
+#### CloudBase Security Rules (v1.0)
+
+activity
+{
+  "read": true,
+  "write": true
+}
+
+participant
+{
+  "read": true,
+  "write": true
+}
+
+checkin
+{
+  "read": true,
+  "write": true
+}
 
 ---
 

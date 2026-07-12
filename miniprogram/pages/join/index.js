@@ -1,4 +1,7 @@
 //miniprogram/pages/join/index.js
+const {
+  getOpenId
+} = require("../../services/userService");
 
 const {
   findActivityByCode
@@ -38,12 +41,16 @@ Page({
 
 
     try{
-      const activity = await findActivityByCode(this.data.joinCode);
+      const activity = await findActivityByCode(this.data.joinCode);     
 
       if (activity.data.length === 0) {
+
+        wx.hideLoading();
+
         wx.showToast({
           title: "邀请码不存在",
-          icon: "none"
+          icon: "none",
+          duration: 2000
         });
         return;
       }
@@ -57,43 +64,55 @@ Page({
         title:"加入中"
       });
       
+      const openId =await getOpenId();
       const participant = {
         activityId: activity.data[0]._id,
         role: "member",
-        openId: "",
+        openId: openId,
         joinedAt: new Date()
       };
   
       const existed = await findParticipant(
         activity.data[0]._id,
-        ""
+        openId
       );
-  
+      
       if (existed.data.length > 0) {
+
+        wx.hideLoading();
+
         wx.showToast({
             title: "已经加入过该活动",
-            icon: "none"
+            icon: "none",
+            duration: 2000
         });
         return;
       }
   
       await addParticipant(participant);
   
+      wx.hideLoading();
+
       wx.showToast({
         title:"加入成功",
-        icon:"success"
-      });
+        icon:"success",
+        duration: 1200
+      }); 
+
+      setTimeout(() => {
+        wx.navigateBack();  
+      }, 1200);
 
     } catch (err){
       console.error(err);
-
+      wx.hideLoading();
       wx.showToast({
         title: "加载失败，请稍后重试",
         icon: "none"
       })   
     } 
     finally{
-      wx.hideLoading();
+      //wx.hideLoading();
 
       this.setData({
         submitting: false

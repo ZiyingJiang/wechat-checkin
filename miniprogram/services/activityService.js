@@ -1,5 +1,7 @@
 /* miniprogram/services/activityService.js */
 
+
+
 const db = wx.cloud.database();
 const activities = db.collection("activities");
 
@@ -34,13 +36,13 @@ function calculateEndDate(days){
 /**
 * 创建活动
 */
-async function createActivity(activity){
+async function createActivity(activity, openId){
     const data = {
         ...activity,
         joinCode: generateJoinCode(),
         startDate: new Date(),
         endDate: calculateEndDate(activity.days),
-        creatorOpenId: "",
+        creatorOpenId: openId,
         maxParticipants:100
     };
 

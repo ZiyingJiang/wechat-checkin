@@ -17,9 +17,10 @@ async function createCheckin(checkin){
 /**
  * 提取打卡历史
  */
-function listCheckins(activityId){
+function listCheckins(activityId, openId){
   return checkins.where({
-    activityId: activityId
+    activityId,
+    openId
   })
   .orderBy("day", "desc")
   .get();
@@ -28,12 +29,12 @@ function listCheckins(activityId){
 /**
  * 查询今天是否已经打卡
  */
-function todayCheckin(activityId, day){
+function todayCheckin(activityId, day, openId){
 
     return checkins.where({
-      activityId: activityId,
-      day: day
-      //participantId: participantid
+      activityId,
+      day,
+      openId
     }).get();
 
 }

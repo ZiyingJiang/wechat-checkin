@@ -19,6 +19,27 @@
 - JavaScript
 - WXSS
 
+## CloudBase Security Rules (v1.0)
+
+activity
+{
+  "read": true,
+  "write": true
+}
+
+participant
+{
+  "read": true,
+  "write": true
+}
+
+checkin
+{
+  "read": true,
+  "write": true
+}
+
+
 ## Roadmap
 
 v1.0

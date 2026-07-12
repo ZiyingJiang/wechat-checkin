@@ -1,5 +1,9 @@
 //miniprogram/pages/activity/index.js
 const {
+  getOpenId
+} = require("../../services/userService");
+
+const {
   getActivityById
 } = require("../../services/activityService");
 
@@ -99,9 +103,9 @@ Page({
             return;
           }
           const activity = activityResult.data[0];
-               
+          const openId = await getOpenId();    
           //读取打卡历史
-          const checkinHistory = await listCheckins(activity._id);
+          const checkinHistory = await listCheckins(activity._id, openId);
 
           //把 values object转成array, 方便页面循环显示。指标及数值遵循数据库顺序而不是输入顺序
           const history = checkinHistory.data.map(checkin=> {

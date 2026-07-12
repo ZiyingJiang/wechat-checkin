@@ -32,6 +32,29 @@ function calculateCurrentDay(startDate,totalDays) {
 
 }
 
+//计算活动是否完结
+function isActivityFinished(endDate) {
+
+  const today = new Date();
+
+  const end = new Date(endDate);
+
+  const todayOnly = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+  );
+
+  const endOnly = new Date(
+      end.getFullYear(),
+      end.getMonth(),
+      end.getDate()
+  );
+
+  return todayOnly > endOnly;
+}
+
+
 function calculateStreak(history, currentDay){
   let streak = 0;
   let targetDay = currentDay;
@@ -55,6 +78,7 @@ function calculateStreak(history, currentDay){
 module.exports = {
 
   calculateCurrentDay,
+  isActivityFinished,
   calculateStreak
 
 };

@@ -1,0 +1,14 @@
+# Node.js dependencies
+node_modules/
+
+# Cloud Function dependencies
+cloudfunctions/**/node_modules/
+
+# npm log
+npm-debug.log*
+
+# Windows
+Thumbs.db
+
+# macOS
+.DS_Store

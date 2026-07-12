@@ -1,5 +1,9 @@
 //miniprogram/pages/create/index.js
 const {
+  getOpenId
+} = require("../../services/userService");
+
+const {
     createActivity
 } = require("../../services/activityService");    
 
@@ -89,6 +93,7 @@ Page({
     })
 
     try {
+      const openId = await getOpenId();
       const activity={  
         title: this.data.title,  
         description: this.data.description,  
@@ -97,14 +102,15 @@ Page({
           item => item.trim() !== ""
         ),
         status: "running",
-        createdAt: new Date()
+        createdAt: new Date(),
+        creatorOpenId: openId
       }
 
-      const res = await createActivity(activity);
+      const res = await createActivity(activity, openId);
       // 自动把创建者加入活动
       await addParticipant({
         activityId: res._id,
-        openId: "",
+        openId,
         nickname: "",
         avatar: "",
         role: "creator",

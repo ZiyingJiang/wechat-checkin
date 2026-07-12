@@ -1,5 +1,6 @@
 const {
   calculateCurrentDay,
+  isActivityFinished,
   calculateStreak
 } = require("./date");
 
@@ -38,8 +39,7 @@ function calculateDashboard(activity, history){
   );
   
   //活动结束与否
-  const isFinished = currentDay > activity.days;
-
+  const isFinished = isActivityFinished(activity.endDate);
   return {
 
       currentDay,
