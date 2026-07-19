@@ -1,3 +1,4 @@
+//miniprogram/utils/dashboard.js
 const {
   calculateCurrentDay,
   isActivityFinished,

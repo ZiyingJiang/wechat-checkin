@@ -16,6 +16,10 @@ const {
 } = require("../../services/checkinService");
 
 const {
+  getDashboardActivities
+} = require("../../services/dashboardService");
+
+const {
   calculateDashboard
 } = require("../../utils/dashboard");
 
@@ -54,13 +58,12 @@ Page({
       
       const openId = await getOpenId();
       
-      const res = await listActivities();
+      const activitiesResult = await getDashboardActivities(openId);
 
       const activities = await Promise.all(
 
-        res.data.map(async item => {
+        activitiesResult.map(async item => {
     
-          const count = await countParticipants(item._id);
           const historyResult = await listCheckins(item._id, openId);
           const history = historyResult.data;
           const dashboard =
@@ -71,7 +74,6 @@ Page({
 
           return {    
               ...item,    
-              participantCount: count.total,    
               ...dashboard    
             };
     

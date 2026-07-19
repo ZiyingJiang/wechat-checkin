@@ -1,11 +1,11 @@
 /* miniprogram/services/checkinService.js */
-
+// ===== Imports =====
 const db = wx.cloud.database();
 const checkins = db.collection("checkins");
+const _ = db.command;
 
-/**
-* 新增打卡
-*/
+// ===== Public Functions =====
+/** 新增打卡 */
 async function createCheckin(checkin){ 
 
   return checkins.add({
@@ -14,9 +14,7 @@ async function createCheckin(checkin){
 
 }
 
-/**
- * 提取打卡历史
- */
+/** 提取打卡历史 */
 function listCheckins(activityId, openId){
   return checkins.where({
     activityId,
@@ -26,9 +24,16 @@ function listCheckins(activityId, openId){
   .get();
 }
 
-/**
- * 查询今天是否已经打卡
- */
+/** 提取所有打卡历史 */
+function listCheckinsByActivities(activityIds, openId){
+  return checkins.where({
+    activityId: _.in(activityIds),
+    openId
+  })
+  .get();
+}
+
+/** 查询今天是否已经打卡 */
 function todayCheckin(activityId, day, openId){
 
     return checkins.where({
@@ -51,10 +56,11 @@ async function updateCheckin(checkinId, values, note) {
 }
 
 
-
+// ===== Exports =====
 module.exports = {
   createCheckin,
   todayCheckin,
   updateCheckin,
-  listCheckins
+  listCheckins,
+  listCheckinsByActivities
 };
