@@ -9,10 +9,18 @@ const {
   listParticipantsByActivities
 } = require("./participantService");
 
+const{
+  listCheckinsByActivities
+} = require("./checkinService");
+
+const {
+  calculateDashboard
+} = require("../utils/dashboard");
+
 // ===== Public Functions =====
 async function getDashboardActivities(openId) {
   const participantActivitiesResult = await listParticipantsByOpenId(openId);
-  console.log("participantActivitiesResult:",participantActivitiesResult );
+  
   const activityIds = participantActivitiesResult.data.map(item => item.activityId);
 
   if (activityIds.length === 0) {
@@ -23,12 +31,23 @@ async function getDashboardActivities(openId) {
 
   const allParticipantsResult = await listParticipantsByActivities(activityIds);       
   const participantCountMap = buildParticipantCountMap(allParticipantsResult.data);
+ 
+  const allCheckinsResult = await listCheckinsByActivities(activityIds, openId);
+  const checkinHistoryMap = buildCheckinHistoryMap(allCheckinsResult.data);
 
-  const dashboardActivities = activitiesResult.data.map(activity => ({
-        ...activity,  
-        participantCount: participantCountMap[activity._id] || 0  
-    }));
-  
+  const dashboardActivities = activitiesResult.data.map(activity => {
+    // ① 找到这个 activity 对应的 checkin history
+    const history = checkinHistoryMap[activity._id] || [];
+    // ② 调用 calculateDashboard()
+    const dashboard = calculateDashboard(activity, history);
+    // ③ 返回 activity + participantCount + dashboard
+    return{
+      ...activity, 
+      participantCount: participantCountMap[activity._id] || 0 ,
+      ...dashboard, 
+    }     
+  });
+
   return dashboardActivities;
 
 }
@@ -52,6 +71,27 @@ function buildParticipantCountMap(participants) {
   }
 
   return participantCountMap;
+
+}
+
+/* 按 activityId 将打卡记录分组 */
+function buildCheckinHistoryMap(checkins) {
+
+  const checkinHistoryMap = {};
+
+  for (const checkin of checkins) {
+
+    const activityId = checkin.activityId;
+
+    if (checkinHistoryMap[activityId]) {
+      checkinHistoryMap[activityId].push(checkin);
+    } else {
+      checkinHistoryMap[activityId] = [checkin];
+    }
+
+  }
+
+  return checkinHistoryMap;
 
 }
 

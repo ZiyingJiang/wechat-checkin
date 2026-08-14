@@ -46,7 +46,7 @@
           </block>
           <block wx:else>
             <view class ="activity-description">
-              🎉 已完成
+              🎉 活动已完结
             </view>
             <view class ="activity-description">
               🏆 打卡 {{item.checkedDays}} / {{item.days}} 天

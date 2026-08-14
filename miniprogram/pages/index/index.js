@@ -4,24 +4,9 @@ const {
 } = require("../../services/userService");
 
 const {
-  listActivities
-} = require("../../services/activityService");
-
-const {
-  countParticipants
-} = require("../../services/participantService");
-
-const {
-  listCheckins
-} = require("../../services/checkinService");
-
-const {
   getDashboardActivities
 } = require("../../services/dashboardService");
 
-const {
-  calculateDashboard
-} = require("../../utils/dashboard");
 
 Page({
 
@@ -58,28 +43,7 @@ Page({
       
       const openId = await getOpenId();
       
-      const activitiesResult = await getDashboardActivities(openId);
-
-      const activities = await Promise.all(
-
-        activitiesResult.map(async item => {
-    
-          const historyResult = await listCheckins(item._id, openId);
-          const history = historyResult.data;
-          const dashboard =
-            calculateDashboard(
-                item,
-                history
-            );
-
-          return {    
-              ...item,    
-              ...dashboard    
-            };
-    
-        })
-  
-      );
+      const activities = await getDashboardActivities(openId);
     
       this.setData({    
           activities,
