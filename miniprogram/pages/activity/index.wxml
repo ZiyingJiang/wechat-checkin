@@ -1,7 +1,9 @@
 <block wx:if="{{loading}}">
+  <view class="activity-loading">
     <view class="loading">
         加载中...
     </view>
+  </view>
 </block>
 
 <block wx:else>
@@ -26,9 +28,9 @@
           Day {{currentDay}} / {{activity.days}}
         </view>
         <block wx:else>
-          <view class="section-title">🎉 恭喜坚持完成本次挑战!</view>
-          <view class="time-description"> 🏆 累计打卡 {{checkedDays}} / {{activity.days}} 天 </view>
-          <view class="time-description"> 🔥 最终连续坚持了 {{streak}} 天</view>
+          <view class="section-title">🎉恭喜坚持完成本次挑战!</view>
+          <view class="time-description">🏆累计打卡 {{checkedDays}} / {{activity.days}} 天 </view>
+          <view class="time-description">🔥最终连续坚持了 {{streak}} 天</view>
         </block>
         <view class="progress">
           <view
@@ -40,7 +42,62 @@
           完成率 {{completionRate}}%
         </view>
       </view>
+      
+      <view class= "card creator-card" wx:if="{{isCreator}}">
+        <view class="section-title">
+          活动管理
+        </view>
 
+        <block wx:if="{{!isEditing}}">
+          <button class="btn-secondary" bindtap="startEdit">
+            编辑活动
+          </button>
+          <button class="btn-danger" bindtap="handleDelete"
+          loading="{{deleting}}" disabled="{{deleting}}">
+            删除活动
+          </button>          
+        </block>
+
+        <block wx:else>
+
+          <view class="edit-form">
+            <view class="form-label">
+              活动名称
+            </view>
+            <input
+              class="form-input"
+              value="{{editValues.title}}"
+              bindinput="onEditTitle"
+              maxlength="50"
+              placeholder="请输入活动名称"
+            />
+
+            <view class="form-label">
+              活动描述
+            </view>
+            <textarea
+              class="form-textarea"
+              value="{{editValues.description}}"
+              bindinput="onEditDescription"
+              maxlength="200"
+              placeholder="请输入活动描述"
+            />
+
+            <view class="edit-actions">
+              <button class="btn-secondary" bindtap="cancelEdit" disabled="{{saving}}">
+                取消
+              </button>
+
+              <button class="btn-primary" bindtap="saveEdit" loading="{{saving}}" disabled="{{saving}}">
+                保存
+              </button>
+            </view>
+
+          </view>
+
+        </block>
+      </view>
+      
       <block wx:if="{{!isFinished}}">
       <view class="card activity-card">
         <view class="activity-title">
@@ -48,13 +105,13 @@
         </view>        
         <view class="activity-description">
             <view class="activity-status">
-              {{hasCheckedToday? "✅ 已完成今日打卡" : "⭕ 今天尚未打卡"}}
+              {{hasCheckedToday? "✅已完成今日打卡" : "⭕今天尚未打卡"}}
             </view>
             <view class="activity-status">
-              🔥 已连续坚持 {{streak}} 天
+              🔥已连续坚持 {{streak}} 天
             </view>
             <view class="activity-status" wx:if="{{!hasCheckedToday}}"> 
-              👉 今天打卡可保持连续记录
+              👉今天打卡可保持连续记录
             </view>            
         </view>
         <view class="submit-section">
@@ -74,7 +131,7 @@
               <block wx:for="{{checkinHistory}}" wx:key="_id">
                 <view class="history-item">
                   <view class="history-day">
-                    ✅ Day {{item.day}}
+                    ✅Day {{item.day}}
                   </view> 
                   <block wx:for= "{{item.valueList}}" wx:key="label">
                       <view class="history-value">
