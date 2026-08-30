@@ -1,4 +1,6 @@
 /* miniprogram/services/activityService.js */
+const { getOpenId } = require("./userService");
+
 // ===== Imports =====
 const db = wx.cloud.database();
 const activities = db.collection("activities");
@@ -9,6 +11,17 @@ const _ = db.command;
 // ===== Public Functions =====
 /** 创建活动 */
 async function createActivity(activity, openId){
+  // 1. 验证当前用户身份
+  if (!openId) {
+    throw new Error("用户身份不存在");
+  }
+
+  const currentOpenId = await getOpenId();
+
+  if (currentOpenId !== openId) {
+    throw new Error("当前用户身份验证失败");
+  }
+  // 2. 创建 Activity
   const data = {
       ...activity,
       joinCode: generateJoinCode(),
@@ -31,10 +44,17 @@ async function createActivity(activity, openId){
 
 /** 修改活动名称和描述 */
 async function updateActivity(activityId, openId, values){
+  // 1. 验证当前用户身份
+  const currentOpenId = await getOpenId();
+  if (!openId || currentOpenId !== openId) {
+    throw new Error("用户身份验证失败");
+  }
+  // 2. 验证活动
   const activityResult = await getActivityById(activityId);
   if (activityResult.data.length === 0) {
     throw new Error("活动不存在");
   }
+  // 3. 验证创建者身份
   const activity = activityResult.data[0];
   const isCreator = activity.creatorOpenId === openId;
   if (!isCreator){
@@ -50,8 +70,14 @@ async function updateActivity(activityId, openId, values){
   return true;
 }
 
-/**删除活动 */
+/**删除活动 （创建者）*/
 async function deleteActivity(activityId, openId){
+  // 1. 验证当前用户身份
+  const currentOpenId = await getOpenId();
+  if (!openId || currentOpenId !== openId) {
+    throw new Error("用户身份验证失败");
+  }
+
   // ① 读取活动
   const activityResult = await getActivityById(activityId);
 
@@ -79,6 +105,54 @@ async function deleteActivity(activityId, openId){
   return true;
 }
 
+/**退出活动（参与者） */
+async function leaveActivity(activityId, openId){
+
+  // 1. 检查活动是否存在
+  const activityResult = await getActivityById(activityId);
+
+  if (activityResult.data.length === 0) {
+    throw new Error("活动不存在");
+  }
+
+  const activity = activityResult.data[0];
+
+   // 2. 验证当前用户身份
+   const currentOpenId = await getOpenId();
+
+   if (!openId || currentOpenId !== openId) {
+     throw new Error("用户身份验证失败");
+   }
+
+  // 3. Creator 不能退出
+  if (activity.creatorOpenId === openId) {
+    throw new Error("创建者不能退出活动");
+  }
+
+  // 4. 确认用户确实参加了这个活动
+  const participantResult = await participants.where({
+    activityId,
+    openId
+  }).get();
+
+  if (participantResult.data.length === 0) {
+    throw new Error("你尚未加入此活动");
+  }
+
+  // 5. 删除自己的 checkins
+  await checkins.where({
+    activityId,
+    openId
+  }).remove();
+
+  // 6. 删除自己的 participant record
+  await participants.where({
+    activityId,
+    openId
+  }).remove();
+
+  return true;
+}
 
 /** 找到活动 */
 function findActivityByCode(joinCode){
@@ -137,6 +211,7 @@ module.exports = {
   createActivity,
   updateActivity,
   deleteActivity,
+  leaveActivity,
   findActivityByCode,
   listActivities,
   getActivityById,

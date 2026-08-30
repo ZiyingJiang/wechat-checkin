@@ -1,4 +1,6 @@
 /* miniprogram/services/participantService.js */
+const { getOpenId } = require("./userService");
+
 // ===== Imports =====
 const db = wx.cloud.database();
 const participants = db.collection("participants");
@@ -11,8 +13,20 @@ const _ = db.command;
  */
 
 // ===== Public Functions =====
-function addParticipant(participant) {
-    return participants.add({
+async function addParticipant(participant) {
+  // 1. 验证用户身份是否存在
+  if (!participant.openId) {
+    throw new Error("用户身份不存在");
+  }
+
+  // 2. 验证传入身份是否是当前用户
+  const currentOpenId = await getOpenId();
+
+  if (currentOpenId !== participant.openId) {
+    throw new Error("当前用户身份验证失败");
+  }
+  // 3. 写入 participant
+  return participants.add({
         data: participant
     });
 }

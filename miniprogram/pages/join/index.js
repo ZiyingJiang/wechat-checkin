@@ -38,15 +38,11 @@ Page({
       return;
     }
 
-
-
     try{
-      const activity = await findActivityByCode(this.data.joinCode);     
+      // 3.查询活动
+      const activityResult = await findActivityByCode(this.data.joinCode);
 
-      if (activity.data.length === 0) {
-
-        wx.hideLoading();
-
+      if (activityResult.data.length === 0) {
         wx.showToast({
           title: "邀请码不存在",
           icon: "none",
@@ -55,7 +51,19 @@ Page({
         return;
       }
 
-      // 3. 开始提交
+      const activity = activityResult.data[0];
+
+      // 4.检查活动是否结束
+      if (new Date() > new Date(activity.endDate)){
+        wx.showToast({
+          title: "活动已结束，无法加入",
+          icon: "none",
+          duration: 2000
+        });
+        return;
+      }
+
+      // 5. 开始提交
       this.setData({
         submitting: true
       });
@@ -63,17 +71,19 @@ Page({
       wx.showLoading({
         title:"加入中"
       });
-      
+
+      // 6. 获取当前用户
       const openId =await getOpenId();
       const participant = {
-        activityId: activity.data[0]._id,
+        activityId: activity._id,
         role: "member",
         openId: openId,
         joinedAt: new Date()
       };
-  
+
+      // 7. 检查是否已经加入
       const existed = await findParticipant(
-        activity.data[0]._id,
+        activity._id,
         openId
       );
       
@@ -88,7 +98,8 @@ Page({
         });
         return;
       }
-  
+
+      // 8. 添加 participant
       await addParticipant(participant);
   
       wx.hideLoading();
@@ -112,7 +123,6 @@ Page({
       })   
     } 
     finally{
-      //wx.hideLoading();
 
       this.setData({
         submitting: false

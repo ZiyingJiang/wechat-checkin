@@ -6,16 +6,18 @@ const {
 const {
   getActivityById, 
   updateActivity,
-  deleteActivity
+  deleteActivity,
+  leaveActivity
 } = require("../../services/activityService");
 
 const { 
-  listCheckins 
+  listCheckins
 } = require("../../services/checkinService");
 
 const {
   calculateDashboard
 } = require("../../utils/dashboard");
+
 
 Page({
 
@@ -37,7 +39,8 @@ Page({
       description: ""
     },
     saving: false,
-    deleting: false
+    deleting: false,
+    leaving: false
   },
   
   async onLoad(options) {
@@ -46,39 +49,16 @@ Page({
     this.setData({
       activityId: options.id 
     })
-    //await this.testDeleteActivity();
+
   },
 
   async onShow() {
     if (!this.data.activityId) {
       return;
     }
-
     await this.loadActivity(this.data.activityId);
   },
-  //测试用
-  /*
-  async testDeleteActivity() {
 
-    try {
-  
-      const openId = await getOpenId();
-      console.log("Delete Activity:","ea09778f6a504f72001504767bf718ef");
-      const result = await deleteActivity(
-        "ea09778f6a504f72001504767bf718ef",
-        openId
-      );
-  
-      console.log("delete result:", result);
-  
-    } catch (err) {
-  
-      console.error("delete failed:", err);
-  
-    }
-  
-  },
-  */
   //点击编辑
   startEdit() {
     const activity = this.data.activity;
@@ -224,7 +204,7 @@ Page({
       this.setData({
         deleting: false
       });
-      
+
       wx.showToast({
         title: "删除成功",
         icon: "success"
@@ -232,9 +212,6 @@ Page({
 
       // 稍后返回首页
       setTimeout(() => {
-        /*wx.redirectTo({
-          url: "/pages/index/index"
-        });*/
         wx.navigateBack(); 
       }, 500);
 
@@ -250,6 +227,64 @@ Page({
         title: err.message || "删除失败，请稍后重试",
         icon: "none"
       });
+    }
+  },
+
+  //退出活动
+  async handleLeave() {
+
+    if (this.data.leaving) {
+      return;
+    }
+
+    const result = await wx.showModal({
+      title: "退出活动",
+      content: "退出后，你在此活动中的打卡记录也会被删除，确定要退出吗？",
+      confirmText: "退出",
+      cancelText: "取消"
+    });
+
+    if (!result.confirm) {
+      return;
+    }
+
+    this.setData({
+      leaving: true
+    });
+
+    try {
+
+      const openId = await getOpenId();
+
+      await leaveActivity(
+        this.data.activityId,
+        openId
+      );
+
+      wx.showToast({
+        title: "已退出活动",
+        icon: "success"
+      });
+
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 500);
+
+    } catch (err) {
+
+      console.error("退出活动失败:", err);
+
+      wx.showToast({
+        title: err.message || "退出失败，请稍后重试",
+        icon: "none"
+      });
+
+    } finally {
+
+      this.setData({
+        leaving: false
+      });
+
     }
   },
 

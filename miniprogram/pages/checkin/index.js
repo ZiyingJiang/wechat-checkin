@@ -37,7 +37,22 @@ Page({
 
     //直接从options中提取id 
     this.activityId = options.id;
+
+    // 防止没有 activityId
+    if (!this.activityId) {
+      wx.showToast({
+        title: "活动不存在",
+        icon: "none"
+      });
+
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 1200);
+
+      return;
+    }
     await this.loadCheckin();
+
   },
 
   async loadCheckin(){
@@ -46,7 +61,7 @@ Page({
     });
 
     try{
-      // 读取活动
+      // 1. 读取活动
       const activityResult = await getActivityById(this.activityId);
       if (activityResult.data.length === 0) {
 
@@ -54,24 +69,17 @@ Page({
           title: "活动不存在",
           icon: "none"
         });
+
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1200);
         return;
       }
       const activity = activityResult.data[0];
 
-      //计算当前天数
+      // 2. 计算当前天数
       const day = calculateCurrentDay(activity.startDate, activity.days);
-
-      //获取openId
-      const openId =await getOpenId();
-
-      //写入数据，准备页面显示
-      this.setData({    
-        activity,
-        currentDay: day,
-        openId
-      });
-
-      //增强保护，活动结束后，不能再check in
+      // 3. 增强保护，活动结束后，不能再check in
       if(day > activity.days){
 
         wx.showToast({
@@ -86,19 +94,26 @@ Page({
         return;
       }
 
-      /**
-      * 读取打卡
-      */
+      // 4. 获取openId
+      const openId =await getOpenId();
 
+      //5. 写入数据，准备页面显示
+      this.setData({
+        activity,
+        currentDay: day,
+        openId
+      });
+
+      // 6. 读取今天的打卡
       const checkin = await todayCheckin(activity._id, day, openId);
       if (checkin.data.length > 0) {
+
         this.setData({
           values:checkin.data[0].values,
           checkinId: checkin.data[0]._id
         }); 
         return;
       }
-
     } catch (err){
 
       console.error(err);
@@ -115,7 +130,6 @@ Page({
       });
 
     }
-    
   },
 
   /**
@@ -133,11 +147,9 @@ Page({
   },
 
   onNoteInput(event){
-
     this.setData({
         note:event.detail.value
     });
-
   },
   
   async handleSubmit(){    
@@ -145,12 +157,10 @@ Page({
     if(this.data.submitting){
       return;
     } 
-
     // 2. 输入校验
     if (!this.validateInput()) {
       return;
     }
-
     // 3. 开始提交
     this.setData({
       submitting: true
@@ -161,10 +171,10 @@ Page({
     });
 
     try{
-        const day = calculateCurrentDay(this.data.activity.startDate, this.data.activity.days);
+      const openId = await getOpenId();
+      const day = calculateCurrentDay(this.data.activity.startDate, this.data.activity.days);
         const checkin = {
           activityId: this.data.activity._id,
-          openId: this.data.openId,
           date: new Date(),
           day: day,
           values: {...this.data.values},
@@ -178,14 +188,15 @@ Page({
           await updateCheckin(
             this.data.checkinId, 
             this.data.values, 
-            this.data.note
+            this.data.note,
+            openId
           ); 
           message =   "打卡已更新";   
         }
         else {      
-          const result = await createCheckin(checkin);
+          const result = await createCheckin(checkin, openId);
           this.setData({
-            checkinId: result._id
+            checkinId: result._id,
           })
 
           message =  "打卡成功";
@@ -218,7 +229,6 @@ Page({
         submitting: false
       });
     }
-
   },
 
   validateInput(){
@@ -230,14 +240,12 @@ Page({
     *因为活动参与者无法干预这个设置
 
     if (fields.length === 0){
-
       wx.showToast({
           title:"活动未设置打卡指标",
           icon:"none"
       });
 
       return false;
-
      }*/
 
     const firstField = fields[0];

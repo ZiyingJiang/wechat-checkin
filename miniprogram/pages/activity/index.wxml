@@ -97,6 +97,21 @@
 
         </block>
       </view>
+
+      <view class="card participant-card" wx:if="{{!isCreator}}">
+        <view class="section-title">
+          活动管理
+        </view>
+
+        <button
+          class="btn-danger"
+          bindtap="handleLeave"
+          loading="{{leaving}}"
+          disabled="{{leaving}}"
+        >
+          退出活动
+        </button>
+      </view>
       
       <block wx:if="{{!isFinished}}">
       <view class="card activity-card">
