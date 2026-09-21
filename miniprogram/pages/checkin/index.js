@@ -110,6 +110,7 @@ Page({
 
         this.setData({
           values:checkin.data[0].values,
+          note:checkin.data[0].note || "",
           checkinId: checkin.data[0]._id
         }); 
         return;
@@ -139,7 +140,7 @@ Page({
   onValueInput(event){
     const values = {...this.data.values};
     const field = event.currentTarget.dataset.field;
-    values[field] = (event.detail.value).trim();
+    values[field] = event.detail.value;
 
     this.setData({
       values
@@ -161,7 +162,13 @@ Page({
     if (!this.validateInput()) {
       return;
     }
-    // 3. 开始提交
+    // 3. 去除空格
+    const values = {...this.data.values};
+    Object.keys(values).forEach(field => {
+      values[field] = (values[field] || "").trim();
+    });
+    const note = (this.data.note || "").trim();
+    // 4. 开始提交
     this.setData({
       submitting: true
     });
@@ -177,8 +184,8 @@ Page({
           activityId: this.data.activity._id,
           date: new Date(),
           day: day,
-          values: {...this.data.values},
-          note: this.data.note,
+          values,//: {...this.data.values},
+          note,//: this.data.note,
           createdAt: new Date()
         };
 
@@ -187,8 +194,8 @@ Page({
         if (this.data.checkinId) {
           await updateCheckin(
             this.data.checkinId, 
-            this.data.values, 
-            this.data.note,
+            values,//this.data.values,
+            note,//this.data.note,
             openId
           ); 
           message =   "打卡已更新";   

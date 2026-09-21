@@ -244,7 +244,25 @@ page {
   line-height: 1.6;
   margin-top: 16rpx;
 }
+.history-note {
+  margin-top: 12rpx;
+  padding-top: 10rpx;
+  border-top: 1rpx solid #E8E5DF;
+}
 
+.history-note-label {
+  font-size: 26rpx;
+  line-height: 1.5;
+  color: #77736D;
+ margin-bottom: 6rpx;
+}
+
+.history-note-content {
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: #4A4742;
+  white-space: pre-line;
+}
 
 /* 空状态 */
 .history-empty {

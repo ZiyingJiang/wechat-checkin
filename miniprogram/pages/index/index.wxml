@@ -63,11 +63,6 @@
               <view class = "activity-status">
                   ⭕ 今天尚未打卡
               </view>
-
-              <view class="activity-status">
-                  👉 去完成今天的成长
-              </view>
-
             </block>
             <block wx:else>
               <view class = "activity-status">
@@ -80,7 +75,6 @@
                     🔥 已连续坚持 {{item.streak}} 天
                 </view>
             </block>
-
             <block wx:else>
                 <view class="activity-status">
                     🌱 今天开始你的第一次坚持
@@ -97,6 +91,9 @@
           </view>
           <view class="activity-status activity-code">
             邀请码：{{item.joinCode}}
+          </view>
+          <view class="activity-status home-card-action">
+            进入活动 →
           </view>
         </view>
       </block>

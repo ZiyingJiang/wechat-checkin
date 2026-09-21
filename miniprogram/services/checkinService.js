@@ -77,12 +77,30 @@ function listCheckins(activityId, openId){
 }
 
 /** 提取所有打卡历史 */
-function listCheckinsByActivities(activityIds, openId){
-  return checkins.where({
-    activityId: _.in(activityIds),
-    openId
-  })
-  .get();
+async function listCheckinsByActivities(activityIds, openId){
+  const pageSize = 20;
+  let allData = [];
+  let skip = 0;
+
+  while (true){
+    const result = await checkins.where({
+      activityId:_.in(activityIds),
+      openId
+    })
+    .skip(skip)
+    .limit(pageSize)
+    .get();
+
+    allData = allData.concat(result.data);
+
+    if (result.data.length < pageSize){
+      break;
+    }
+    skip += pageSize;
+  }
+  return {
+    data: allData
+  };
 }
 
 /** 查询今天是否已经打卡 */

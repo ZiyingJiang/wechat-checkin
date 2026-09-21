@@ -254,3 +254,8 @@
   color:#999;
   text-align:center;
 }
+.home-card-action {
+  margin-top: 16rpx;
+  text-align: right;
+  font-size: 26rpx;
+}

@@ -40,7 +40,8 @@ Page({
     },
     saving: false,
     deleting: false,
-    leaving: false
+    leaving: false,
+    showAllHistory: false
   },
   
   async onLoad(options) {
@@ -57,6 +58,13 @@ Page({
       return;
     }
     await this.loadActivity(this.data.activityId);
+  },
+
+  //展开历史
+  toggleHistory() {
+    this.setData({
+      showAllHistory: !this.data.showAllHistory
+    });
   },
 
   //点击编辑
@@ -333,7 +341,8 @@ Page({
       completionRate: 0,
       streak: 0,
       hasCheckedToday: null,
-      checkedDays: 0
+      checkedDays: 0,
+      showAllHistory: false
     });
     
     try{
@@ -385,7 +394,8 @@ Page({
           isCreator,
           checkinHistory: history,      
           ...dashboard,
-          loading: false
+          loading: false,
+          showAllHistory: false
         });
     }catch(err){
 
