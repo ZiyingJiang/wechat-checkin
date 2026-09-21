@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is inspired by **Keep a Changelog** and uses semantic versioning where practical.
 
 ---
+## v1.0.3 — Reliability + UX 2026-9-21
+
+### Reliability
+- Fixed dashboard check-in history pagination so all check-ins are loaded beyond the CloudBase page limit.
+
+### Check-in UX
+- Preserved spaces within metric input while trimming leading/trailing spaces on submission.
+- Preserved and restored today's reflection (`note`) when editing a check-in.
+- Added today's reflection to check-in history.
+- Preserved user-entered line breaks in reflections.
+
+### Activity UX
+- Activity history now shows the most recent three records by default.
+- Added expand/collapse for full check-in history.
+- Moved activity management actions lower on the activity page.
+- Added clearer navigation cues on activity cards.
+
+### Compatibility
+- Existing check-in records without a `note` remain supported.
 
 ## [1.0.2] - 2026-08-31
 
